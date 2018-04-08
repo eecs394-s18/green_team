@@ -31,3 +31,8 @@ https://www.djamware.com/post/5a629d9880aca7059c142976/build-ionic-3-angular-5-a
 
 https://devdactic.com/ionic-firebase-angularfire/
 
+To make a build on iOS:
+- run the command 
+'ionic cordova build --release iOS'
+- then change developer team to your personal team 
+- may have to change bundle identifier
