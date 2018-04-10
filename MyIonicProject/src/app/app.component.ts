@@ -50,6 +50,7 @@ export class MyApp {
       { title: 'Hello Ionic', component: HelloIonicPage },
       { title: 'My First List', component: ListPage },
       { title: 'Sign In', component: SigninPage }
+      
     ];
   }
 
