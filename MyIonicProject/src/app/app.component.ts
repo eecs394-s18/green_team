@@ -10,6 +10,7 @@ import { SigninPage } from '../pages/signin/signin';
 import { RoomPage } from '../pages/room/room';
 import { AddRoomPage } from '../pages/add-room/add-room';
 import { ChatPage } from '../pages/chat/chat';
+import { ProfilesPage } from '../pages/profiles/profiles';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -49,7 +50,8 @@ export class MyApp {
     this.pages = [
       { title: 'Hello Ionic', component: HelloIonicPage },
       { title: 'My First List', component: ListPage },
-      { title: 'Sign In', component: SigninPage }
+      { title: 'Sign In', component: SigninPage },
+      { title: 'Profiles', component: ProfilesPage }
     ];
   }
 
