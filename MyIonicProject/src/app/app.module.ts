@@ -10,6 +10,7 @@ import { SigninPage } from '../pages/signin/signin';
 import { RoomPage } from '../pages/room/room';
 import { AddRoomPage } from '../pages/add-room/add-room';
 import { ChatPage } from '../pages/chat/chat';
+import { ProfilesPage } from '../pages/profiles/profiles';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -42,7 +43,8 @@ const config = {
     SigninPage,
     RoomPage,
     AddRoomPage,
-    ChatPage
+    ChatPage,
+    ProfilesPage
   ],
   imports: [
     BrowserModule,
@@ -60,7 +62,8 @@ const config = {
     SigninPage,
     RoomPage,
     AddRoomPage,
-    ChatPage
+    ChatPage,
+    ProfilesPage
   ],
   providers: [
     StatusBar,
