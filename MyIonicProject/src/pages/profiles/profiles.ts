@@ -17,13 +17,15 @@ import * as firebase from 'Firebase';
 export class ProfilesPage {
 
   // profiles = [];
-  // data = { profile:'' };
+  data = {};
   
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-  	let ref = firebase.database().ref('profiles/').push();
-    ref.set({
-      profile:"test"
-    });
+  	// let ref = firebase.database().ref('profiles/').push();
+   //  ref.set({
+   //    profile:{
+   //      "name":"conway"
+   //    }
+   //  });
     
   // 	this.ref.on('value', resp => {
   //   this.profiles = [];
@@ -44,6 +46,15 @@ export class ProfilesPage {
     console.log('ionViewDidLoad ProfilesPage');
   }
 
+  submitProfile(){
+    console.log('profile submitted!');
+    console.log(this.data);
+    // test
+    let ref = firebase.database().ref('profiles/').push();
+    ref.set({
+      profile:this.data,
+    })
+  }
 }
 
 // export const snapshotToArray = snapshot => {
