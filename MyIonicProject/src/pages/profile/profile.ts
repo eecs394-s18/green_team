@@ -37,7 +37,7 @@ export class ProfilePage {
   // use them in Security and Firebase Rules, and show profiles
   save() {
     firebase.database().ref('users/' + this.user.userId).set({
-      username: this.person.name,
+      username: this.person.username,
       email: this.person.email,
       country: this.person.country,
       languages: this.person.languages
