@@ -32,12 +32,12 @@ export class ProfilePage {
     });
   }
 
-  // Get a reference to the database service 
+  // Get a reference to the database service
   // save the user's profile into Firebase so we can list users,
   // use them in Security and Firebase Rules, and show profiles
   save() {
     firebase.database().ref('users/' + this.user.userId).set({
-      username: this.person.name,
+      username: this.person.username,
       email: this.person.email,
       country: this.person.country,
       languages: this.person.languages
