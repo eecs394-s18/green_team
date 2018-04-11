@@ -11,20 +11,25 @@ import { RoomPage } from '../pages/room/room';
 import { AddRoomPage } from '../pages/add-room/add-room';
 import { ChatPage } from '../pages/chat/chat';
 import { ProfilesPage } from '../pages/profiles/profiles';
+import { ProfilePage } from '../pages/profile/profile';
+import { AuthPage } from '../pages/auth/auth';
+import { AuthProvider } from '../providers/auth/auth';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import * as firebase from 'Firebase';
+import { environment } from '../environments/environment';
 
-const config = {
-  apiKey: 'AIzaSyBoiRxz06EnLnoXJQIwpYPy9XKQ9ymwcdQ',
-  authDomain: 'commonculture-f0aa6.firebaseapp.com',
-  databaseURL: 'https://commonculture-f0aa6.firebaseio.com',
-  projectId: 'commonculture-f0aa6',
-  storageBucket: 'commonculture-f0aa6.appspot.com',
-  messagingSenderId: '377375303339'
-};
+
+//const config = {
+ // apiKey: 'AIzaSyBoiRxz06EnLnoXJQIwpYPy9XKQ9ymwcdQ',
+ // authDomain: 'commonculture-f0aa6.firebaseapp.com',
+ // databaseURL: 'https://commonculture-f0aa6.firebaseio.com',
+ // projectId: 'commonculture-f0aa6',
+ // storageBucket: 'commonculture-f0aa6.appspot.com',
+ // messagingSenderId: '377375303339'
+//};
 
 @Component({
   templateUrl: 'app.html'
@@ -42,7 +47,7 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen
   ) {
-    firebase.initializeApp(config);
+    //firebase.initializeApp(config);
 
     this.initializeApp();
 
@@ -51,7 +56,8 @@ export class MyApp {
       { title: 'Hello Ionic', component: HelloIonicPage },
       { title: 'My First List', component: ListPage },
       { title: 'Sign In', component: SigninPage },
-      { title: 'Profiles', component: ProfilesPage }
+      { title: 'Profiles', component: ProfilesPage },
+      { title: 'Authentication', component: AuthPage }
     ];
   }
 
