@@ -7,6 +7,9 @@
 <ion-header>
 
   <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Profiles</ion-title>
   </ion-navbar>
 
@@ -17,7 +20,7 @@
     <ion-list>
       <ion-item>
         <ion-label floating>Enter your email</ion-label>
-        <ion-input type="text" [(ngModel)]="data.email" name="email" required=""></ion-input>
+        <ion-input type="text" [(ngModel)]="data.email" name="email" required=True></ion-input>
 
       </ion-item>
       <ion-item>
