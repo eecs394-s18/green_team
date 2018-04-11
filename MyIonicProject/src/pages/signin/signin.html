@@ -5,6 +5,15 @@
   Ionic pages and navigation.
 -->
 
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Sign in</ion-title>
+  </ion-navbar>
+</ion-header>
+
 
 <ion-content padding>
   <form (ngSubmit)="enterNickname()">
@@ -19,4 +28,3 @@
     </ion-list>
   </form>
 </ion-content>
-
