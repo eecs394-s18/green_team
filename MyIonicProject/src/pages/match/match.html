@@ -8,25 +8,33 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card>
-    <img src="assets/imgs/william.jpg" />
-    <ion-card-content>
-    <ion-card-title>William Ho</ion-card-title>
-    <p>
-      The most popular industrial group ever, and largely
-      responsible for bringing the music to a mass audience.
-    </p>
-  </ion-card-content>
-  </ion-card>
 
-  <ion-card>
-    <img src="assets/imgs/conway.jpg" />
+  <ion-card *ngFor="let user of chosenUsers">
+    <img src="assets/imgs/avatar.png" />
     <ion-card-content>
-    <ion-card-title>Conway Zhu</ion-card-title>
-    <p>
-      The most popular industrial group ever, and largely
-      responsible for bringing the music to a mass audience.
-    </p>
-  </ion-card-content>
+      <ion-card-title>{{ user.username }}</ion-card-title>
+      <p>
+        <ion-list>
+          <ion-item>
+            <ion-icon name="people" item-start></ion-icon>
+            Languages: {{ user.languages }}
+          </ion-item>
+          <ion-item>
+            <ion-icon name="flag" item-start></ion-icon>
+            Country: {{ user.country }}
+          </ion-item>
+          <ion-item>
+            <ion-icon name="mail" item-start></ion-icon>
+            Email: {{ user.email }}
+          </ion-item>
+        </ion-list>
+      </p>
+
+      <button ion-button icon-left text-center block>
+        <ion-icon name="chatboxes"></ion-icon>
+        Chat
+      </button>
+
+    </ion-card-content>
   </ion-card>
 </ion-content>
