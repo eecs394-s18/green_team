@@ -31,7 +31,7 @@ export class MatchPage {
     // TODO: Algorithm for matching users goes here.
 
     let keys:string[] = Object.keys(this.allUsers);
-    for (let i:number = 0; i < 4; i++) {
+    for (let i:number = 0; i < 5; i++) {
       this.chosenUsers.push(this.allUsers[keys[i]]);
     }
   }
