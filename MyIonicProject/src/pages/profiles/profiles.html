@@ -21,16 +21,23 @@
       <ion-item>
         <ion-label floating>Enter your email</ion-label>
         <ion-input type="text" [(ngModel)]="data.email" name="email" required=True></ion-input>
-
       </ion-item>
+
       <ion-item>
       	<ion-label floating>Enter your name</ion-label>
         <ion-input type="text" [(ngModel)]="data.name" name="name" required=""></ion-input>
       </ion-item>
+
        <ion-item>
       	<ion-label floating>Enter your favorite movie</ion-label>
         <ion-input type="text" [(ngModel)]="data.movie" name="movie" required=""></ion-input>
       </ion-item>
+
+      <ion-item>
+      	<ion-label floating>Enter your password</ion-label>
+        <ion-input type="password" [(ngModel)]="data.password" name="password" required=""></ion-input>
+      </ion-item>
+
       <ion-item>
         <button ion-button full round color="secondary" type="submit">Enter</button>
       </ion-item>
