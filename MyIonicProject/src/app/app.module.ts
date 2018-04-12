@@ -11,6 +11,7 @@ import { AuthPage } from '../pages/auth/auth';
 import { ProfilesPage } from '../pages/profiles/profiles';
 import { ProfilePage } from '../pages/profile/profile';
 import { MatchPage } from '../pages/match/match';
+import { ChatsPage } from '../pages/chats/chats';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -48,7 +49,8 @@ firebase.initializeApp(environment.firebase);
     ProfilesPage,
     ProfilePage,
     MatchPage,
-    AuthPage
+    AuthPage,
+    ChatsPage
   ],
   imports: [
     BrowserModule,
@@ -67,7 +69,8 @@ firebase.initializeApp(environment.firebase);
     ProfilesPage,
     ProfilePage,
     MatchPage,
-    AuthPage
+    AuthPage,
+    ChatsPage
   ],
   providers: [
     StatusBar,

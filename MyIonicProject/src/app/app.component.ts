@@ -11,6 +11,7 @@ import { ProfilesPage } from '../pages/profiles/profiles';
 import { ProfilePage } from '../pages/profile/profile';
 import { MatchPage } from '../pages/match/match';
 import { AuthPage } from '../pages/auth/auth';
+import { ChatsPage } from '../pages/chats/chats';
 
 import { AuthProvider } from '../providers/auth/auth';
 
@@ -51,9 +52,10 @@ export class MyApp {
 
     // set our app's pages
     this.pages = [
-      { title: 'Profiles', component: ProfilesPage },
-      { title: 'Authentication', component: AuthPage },
-      { title: 'Match', component: MatchPage }
+      { title: 'Profile', component: ProfilePage },
+      // { title: 'Authentication', component: AuthPage },
+      { title: 'Find a New Match', component: MatchPage },
+      { title: 'Chats', component: ChatsPage}
     ];
   }
 
