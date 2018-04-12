@@ -16,21 +16,54 @@
 </ion-header>
 
 <ion-content padding>
+  <img
+     class="logo"
+     src="assets/imgs/logo.png"
+     alt="Ionic Framework logo">
 
+  <form name="logInForm" (ngSubmit)="logIn()">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Your E-mail Address</ion-label>
+        <ion-input
+          type="email"
+          name="email"
+          [(ngModel)]="data.email"
+          required></ion-input>
+      </ion-item>
 
+      <ion-item>
+        <ion-label floating>Your Password</ion-label>
+        <ion-input
+          type="password"
+          name="password"
+          [(ngModel)]="data.password"
+          required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <button
+           ion-button
+           color="primary"
+           text-center
+           block
+           [disabled]="false"
+           >Log In</button>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>
+
+<!-- <ion-content padding>
    <img
       class="logo"
-      src="assets/images/icon.png"
+      src="assets/images/logo.png"
       alt="Ionic Framework logo">
 
 
-   <div
-      class="login">
-
+   <div class="login">
       <h1>Welcome</h1>
-
       <p>Please log in to access the Demo.</p>
-
       <form
         [formGroup]="form"
         (ngSubmit)="logIn()">
@@ -58,8 +91,5 @@
                block [disabled]="!form.valid">Log In</button>
          </ion-list>
       </form>
-
    </div>
-
-
-</ion-content>
+</ion-content> -->

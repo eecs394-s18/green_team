@@ -19,6 +19,7 @@ export class AuthPage {
     * Create reference for FormGroup object
     */
    public form: FormGroup;
+   public data = { email: "", password: "" }
 
 
    constructor(public navCtrl: NavController,
@@ -30,6 +31,11 @@ export class AuthPage {
          'email': ['', Validators.required],
          'password': ['', Validators.required]
       });
+   }
+
+   validateEmail(email): boolean {
+     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+     return re.test(String(email).toLowerCase());
    }
 
    /**
@@ -45,15 +51,19 @@ export class AuthPage {
       let email: any = this.form.controls['email'].value,
           password: any = this.form.controls['password'].value;
 
-      this._AUTH.loginWithEmailAndPassword(email, password)
-      .then((auth: any) =>
-      {
-         this.navCtrl.setRoot(ProfilePage);
-      })
-      .catch((error: any) =>
-      {
-         console.log(error.message);
-      });
+      if (this.data.password != "" && this.validateEmail(this.data.email)) {
+        this._AUTH.loginWithEmailAndPassword(this.data.email, this.data.password)
+        .then((auth: any) =>
+        {
+           this.navCtrl.setRoot(ProfilePage);
+        })
+        .catch((error: any) =>
+        {
+           console.log(error.message);
+        });
+      } else {
+        console.log('invalid inputs');
+      }
    }
 
 }
