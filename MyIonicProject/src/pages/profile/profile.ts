@@ -24,7 +24,7 @@ export class ProfilePage {
   }
 
   ionViewDidLoad(){
-    firebase.database().ref('/users/' + this.user.userId).once('value', snapshot => {
+    firebase.database().ref('/users/' + this.user.uid).once('value', snapshot => {
         const userData = snapshot.val();
         if (userData) {
           this.person = userData;
@@ -36,7 +36,7 @@ export class ProfilePage {
   // save the user's profile into Firebase so we can list users,
   // use them in Security and Firebase Rules, and show profiles
   save() {
-    firebase.database().ref('users/' + this.user.userId).set({
+    firebase.database().ref('users/' + this.user.uid).set({
       username: this.person.username,
       email: this.person.email,
       country: this.person.country,
