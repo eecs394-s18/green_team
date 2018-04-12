@@ -13,7 +13,7 @@ import { ChatPage } from '../pages/chat/chat';
 import { AuthPage } from '../pages/auth/auth';
 import { ProfilesPage } from '../pages/profiles/profiles';
 import { ProfilePage } from '../pages/profile/profile';
-
+import { MatchPage } from '../pages/match/match';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -53,6 +53,7 @@ firebase.initializeApp(environment.firebase);
     ChatPage,
     ProfilesPage,
     ProfilePage,
+    MatchPage,
     AuthPage
   ],
   imports: [
@@ -74,6 +75,7 @@ firebase.initializeApp(environment.firebase);
     ChatPage,
     ProfilesPage,
     ProfilePage,
+    MatchPage,
     AuthPage
   ],
   providers: [

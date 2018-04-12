@@ -12,6 +12,7 @@ import { AddRoomPage } from '../pages/add-room/add-room';
 import { ChatPage } from '../pages/chat/chat';
 import { ProfilesPage } from '../pages/profiles/profiles';
 import { ProfilePage } from '../pages/profile/profile';
+import { MatchPage } from '../pages/match/match';
 import { AuthPage } from '../pages/auth/auth';
 import { AuthProvider } from '../providers/auth/auth';
 
@@ -57,7 +58,8 @@ export class MyApp {
       { title: 'My First List', component: ListPage },
       { title: 'Sign In', component: SigninPage },
       { title: 'Profiles', component: ProfilesPage },
-      { title: 'Authentication', component: AuthPage }
+      { title: 'Authentication', component: AuthPage },
+      { title: 'Match', component: MatchPage }
     ];
   }
 
