@@ -41,7 +41,7 @@ export class AuthProvider {
     * @return {Promise}
     */
    loginWithEmailAndPassword(email: string,
-                             password: string): Promise
+                             password: string): Promise<any>
    {
       return new Promise((resolve, reject) =>
       {
@@ -68,7 +68,7 @@ export class AuthProvider {
     * @method logOut
     * @return {Promise}
     */
-   logOut(): Promise
+   logOut(): Promise<any>
    {
       return new Promise((resolve, reject) =>
       {
