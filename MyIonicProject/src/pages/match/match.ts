@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, Content } from 'ionic-angular';
-import { ChatPage } from '../chat/chat'
+import { ChatPage } from '../chat/chat';
 import * as firebase from 'Firebase';
-
+import * as objectHash from 'object-hash';
 @IonicPage()
 @Component({
   selector: 'page-match',
@@ -37,11 +37,29 @@ export class MatchPage {
   }
 
   chatUser(user): void {
+ 
     const rooms = firebase.database().ref('chatrooms');
     const currUser = firebase.auth().currentUser;
+    const email_set = new Set([currUser.email,user.email])
+    var key = '', nickname = currUser.displayName, otherNickname = user.username, roomFound = false;
+    const chatID = objectHash(email_set);
+    console.log(user,currUser)
 
-    var key = '', nickname = '', otherNickname = '', roomFound = false;
+    // assume its not in db
+    var tmp = {}
+    tmp[chatID] = {}
+    tmp[chatID]['members'] = {}
+    tmp[chatID]['members'][nickname] = true;
+    tmp[chatID]['members'][otherNickname] = true;
 
+    rooms.update(tmp)
+
+    this.navCtrl.setRoot(ChatPage, {
+          key: chatID,
+          nickname: nickname,
+          otherNickname: otherNickname
+        });
+    /*
     rooms.once('value', snapshot => {
       // Join existing room - check for existing room
       // If not existing, then make a new one
@@ -91,5 +109,6 @@ export class MatchPage {
         console.log('could not join room - something went wrong')
       }
     })
+    */
   }
 }
