@@ -43,72 +43,38 @@ export class MatchPage {
     const email_set = new Set([currUser.email,user.email])
     var key = '', nickname = currUser.displayName, otherNickname = user.username, roomFound = false;
     const chatID = objectHash(email_set);
-    console.log(user,currUser)
 
-    // assume its not in db
-    var tmp = {}
-    tmp[chatID] = {}
-    tmp[chatID]['members'] = {}
-    tmp[chatID]['members'][nickname] = true;
-    tmp[chatID]['members'][otherNickname] = true;
+    //check if in ddb
+    // theres some weird bug here but it seems to work anyways
+    var new_chat = false;
+    rooms.once('value')
+    .then(function(snap){
+      if(snap.child(chatID).exists()){
+        console.log('chatroom already exists')
+        new_chat = false;
+      }
+      else{
+        new_chat=true;
+        console.log('chatroom does not exist')
+      }
+    })
+    //its not in db
+    if(new_chat){
+      var tmp = {}
+      tmp[chatID] = {}
+      tmp[chatID]['members'] = {}
+      tmp[chatID]['members'][nickname] = true;
+      tmp[chatID]['members'][otherNickname] = true;
 
-    rooms.update(tmp)
+      rooms.update(tmp)
+    }
+    
 
     this.navCtrl.setRoot(ChatPage, {
           key: chatID,
           nickname: nickname,
           otherNickname: otherNickname
         });
-    /*
-    rooms.once('value', snapshot => {
-      // Join existing room - check for existing room
-      // If not existing, then make a new one
-      for (var room_key in snapshot.val()) {
-        let members = snapshot.val()[room_key]['members'];
-
-        var count = 0;
-        for (var username in members) {
-          if (username == currUser.displayName || username == user.username) {
-            count++;
-            delete members[username];
-          }
-        }
-
-        if (count == 2) {
-          roomFound = true;
-          key = room_key;
-          break;
-        }
-      }
-
-      if (!roomFound) {
-        // Create new room
-        var data = { members: {} };
-        data['members'][currUser.displayName] = true
-        data['members'][user.username] = true
-
-        var newref = rooms.push(data);
-
-        key = newref.key;
-        roomFound = true;
-      }
-
-      nickname = currUser.displayName;
-      otherNickname = user.username;
-
-      if (roomFound) {
-        console.log(key)
-        console.log(nickname)
-        console.log(otherNickname)
-        this.navCtrl.setRoot(ChatPage, {
-          key: key,
-          nickname: nickname,
-          otherNickname: otherNickname
-        });
-      } else {
-        console.log('could not join room - something went wrong')
-      }
-    })
-    */
+   
   }
 }
