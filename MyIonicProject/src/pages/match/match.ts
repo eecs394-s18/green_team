@@ -59,6 +59,7 @@ export class MatchPage {
       }
     })
     //its not in db
+    // this will probably screw up the chat history
     if(new_chat){
       var tmp = {}
       tmp[chatID] = {}
