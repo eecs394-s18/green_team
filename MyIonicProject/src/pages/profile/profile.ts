@@ -36,12 +36,35 @@ export class ProfilePage {
   // save the user's profile into Firebase so we can list users,
   // use them in Security and Firebase Rules, and show profiles
   save() {
-    firebase.database().ref('users/' + this.user.uid).set({
-      username: this.person.username,
-      email: this.person.email,
-      country: this.person.country,
-      languages: this.person.languages
-    });
+    firebase.database().ref('users/' + this.user.uid)
+      .set({
+        username: this.person.username,
+        email: this.person.email,
+        country: this.person.country,
+        languages: this.person.languages
+      })
+      .then(ref => {
+        this.user.updateProfile({
+          displayName: this.person.username,
+          photoURL: ""
+        }).then(() => {
+          this.user.updateEmail(this.person.email).then(() => {
+            console.log("profile successfully updated!")
+          }).catch(error => {
+            console.log(error.message);
+          })
+        }).catch(error => {
+          console.log(error.message);
+        })
+      })
+      .catch(error => {
+        console.log(error.message);
+      })
+  }
+
+  // TODO: Finish resetting profile
+  reset(): void {
+    console.log('reset profile to defaults');
   }
 
 }
