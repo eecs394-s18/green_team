@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController } from 'ionic-angular';
 import {
    FormBuilder,
    FormGroup,
@@ -24,7 +24,8 @@ export class AuthPage {
 
    constructor(public navCtrl: NavController,
                private _FB: FormBuilder,
-               private _AUTH: AuthProvider)
+               private _AUTH: AuthProvider,
+               public loadingCtrl: LoadingController)
    {
       // Define FormGroup object using Angular's FormBuilder
       this.form = this._FB.group({
@@ -38,6 +39,17 @@ export class AuthPage {
      return re.test(String(email).toLowerCase());
    }
 
+   presentText(text) {
+     let loading = this.loadingCtrl.create({
+       spinner: 'hide',
+       content: text
+     });
+     loading.present();
+     setTimeout(() => {
+       loading.dismiss();
+     }, 2000);
+   }
+
    /**
     * Log in using the loginWithEmailAndPassword method
     * from the AuthProvider service (supplying the email
@@ -46,24 +58,30 @@ export class AuthPage {
     * @method logIn
     * @return {none}
     */
-   logIn(): void
-   {
-      let email: any = this.form.controls['email'].value,
-          password: any = this.form.controls['password'].value;
+   logIn(): void {
 
-      if (this.data.password != "" && this.validateEmail(this.data.email)) {
-        this._AUTH.loginWithEmailAndPassword(this.data.email, this.data.password)
-        .then((auth: any) =>
-        {
-           this.navCtrl.setRoot(ProfilePage);
-        })
-        .catch((error: any) =>
-        {
-           console.log(error.message);
-        });
-      } else {
-        console.log('invalid inputs');
-      }
-   }
+    let email: any = this.form.controls['email'].value,
+    password: any = this.form.controls['password'].value;
 
+    let loading = this.loadingCtrl.create({
+      content: 'Loading...'
+    });
+    loading.present();
+
+    if (this.data.password != "" && this.validateEmail(this.data.email)) {
+      this._AUTH.loginWithEmailAndPassword(this.data.email, this.data.password)
+      .then((auth: any) => {
+        loading.dismiss();
+        this.navCtrl.setRoot(ProfilePage);
+      })
+      .catch((error: any) => {
+        loading.dismiss();
+        this.presentText(error.message);
+        console.log(error.message);
+      });
+    } else {
+      loading.dismiss();
+      this.presentText('Invalid inputs. Please try again.')
+    }
+  }
 }

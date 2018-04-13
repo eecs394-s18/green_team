@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Content } from 'ionic-angular';
+import { NavController, NavParams, Content, LoadingController } from 'ionic-angular';
 import { ChatPage } from '../chat/chat';
 import * as firebase from 'Firebase';
 import * as objectHash from 'object-hash';
@@ -13,13 +13,19 @@ export class MatchPage {
 
   public allUsers;
   public chosenUsers;
+  private loading;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
     this.allUsers = {};
     this.chosenUsers = [];
   }
 
   ionViewDidLoad() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Getting matches...'
+    });
+    this.loading.present();
+
     const ref = firebase.database().ref('users');
     const users = ref.on('value', snapshot => {
       this.allUsers = snapshot.val();
@@ -34,15 +40,17 @@ export class MatchPage {
     for (let i:number = 0; i < 5; i++) {
       this.chosenUsers.push(this.allUsers[keys[i]]);
     }
+    this.loading.dismiss();
   }
 
   chatUser(user): void {
- 
+
     const rooms = firebase.database().ref('chatrooms');
     const currUser = firebase.auth().currentUser;
     const email_set = new Set([currUser.email,user.email])
     var key = '', nickname = currUser.displayName, otherNickname = user.username, roomFound = false;
     const chatID = objectHash(email_set);
+    console.log(chatID)
 
     //check if in ddb
     // theres some weird bug here but it seems to work anyways
@@ -69,13 +77,13 @@ export class MatchPage {
 
       rooms.update(tmp)
     }
-    
+
 
     this.navCtrl.setRoot(ChatPage, {
           key: chatID,
           nickname: nickname,
           otherNickname: otherNickname
         });
-   
+
   }
 }
