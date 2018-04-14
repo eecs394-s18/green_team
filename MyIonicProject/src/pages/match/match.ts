@@ -52,38 +52,38 @@ export class MatchPage {
     const chatID = objectHash(email_set);
     console.log(chatID)
 
-    //check if in ddb
-    // theres some weird bug here but it seems to work anyways
-    var new_chat = false;
+    // Check if in db
     rooms.once('value')
-    .then(function(snap){
-      if(snap.child(chatID).exists()){
+    .then(snap => {
+      if(snap.child(chatID).exists()) {
         console.log('chatroom already exists')
-        new_chat = false;
+        this.navigateToChat(chatID, nickname, otherNickname);
       }
-      else{
-        new_chat=true;
-        console.log('chatroom does not exist')
+      else {
+        console.log('chatroom does not exist, create new')
+        var tmp = {}
+        tmp[chatID] = {}
+        tmp[chatID]['members'] = {}
+        tmp[chatID]['members'][nickname] = true;
+        tmp[chatID]['members'][otherNickname] = true;
+
+        console.log('outside: ', this);
+
+        rooms.update(tmp).then(res => {
+          console.log('inside: ', this);
+          this.navigateToChat(chatID, nickname, otherNickname);
+        }).catch(error => {
+          console.log(error.message);
+        })
       }
     })
-    //its not in db
-    // this will probably screw up the chat history
-    if(new_chat){
-      var tmp = {}
-      tmp[chatID] = {}
-      tmp[chatID]['members'] = {}
-      tmp[chatID]['members'][nickname] = true;
-      tmp[chatID]['members'][otherNickname] = true;
+  }
 
-      rooms.update(tmp)
-    }
-
-
+  navigateToChat(chatID, nickname, otherNickname) {
     this.navCtrl.setRoot(ChatPage, {
-          key: chatID,
-          nickname: nickname,
-          otherNickname: otherNickname
-        });
-
+      key: chatID,
+      nickname: nickname,
+      otherNickname: otherNickname
+    });
   }
 }
