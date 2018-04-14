@@ -26,6 +26,7 @@ export class ChatsPage {
     this.allUsers = {};
     this.chosenUsers = [];
     this.existingChats = {};
+    this.nameToUUID = {}; // Map username to UUID in allUsers
   }
 
   ionViewDidLoad() {
@@ -37,6 +38,11 @@ export class ChatsPage {
     const ref = firebase.database().ref('users');
     const users = ref.on('value', snapshot => {
       this.allUsers = snapshot.val();
+      for (var uuid in this.allUsers) {
+        if (this.allUsers.hasOwnProperty(uuid)) {
+          this.nameToUUID[this.allUsers[uuid]['username']] = uuid;
+        }
+      }
       this.selectUsers();
     });
   }
@@ -45,30 +51,20 @@ export class ChatsPage {
     // TODO: Algorithm for matching users goes here.
     const currUser = firebase.auth().currentUser;
     const rooms = firebase.database().ref('chatrooms');
-    let keys:string[] = Object.keys(this.allUsers);
-    for (let i:number = 0; i < 5; i++) {
-      var user = this.allUsers[keys[i]];
-      // this.chosenUsers.push(user)
-      console.log(user);
 
-      var email_set = new Set([currUser.email,user.email]);
-      var chatID = objectHash(email_set);
-
-      var existing_chat = false;
-      rooms.once('value')
-      .then(function(snap){
-        if(snap.child(chatID).exists()){
-          console.log('chatroom already exists')
-          console.log(user)
-          existing_chat = true;
+    rooms.once('value')
+    .then(snap => {
+      const chats = snap.val();
+      for (var key in chats) {
+        if (chats.hasOwnProperty(key)) {
+          if (currUser.displayName in chats[key]['members']) {
+            delete chats[key]['members'][currUser.displayName];
+            this.chosenUsers.push(this.allUsers[this.nameToUUID[Object.keys(chats[key]['members'])[0]]]);
+          }
         }
-      });
-      // existing_chat is never true for some reason...
-      if(existing_chat) {
-      	this.chosenUsers.push(user);
       }
-    }
-    this.loading.dismiss();
+      this.loading.dismiss();
+    });
   }
 
   // chatUser(user): void {
