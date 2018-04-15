@@ -11,13 +11,20 @@ import * as objectHash from 'object-hash';
 
 export class MatchPage {
 
+
   public allUsers;
   public chosenUsers;
   private loading;
+  currentUser: any;
+  public person: {username: string, email: string, country: string, languages: string};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
     this.allUsers = {};
     this.chosenUsers = [];
+    this.currentUser = firebase.auth().currentUser;
+
+    //this.currentUser = firebase.database().ref('users/' + firebase.auth().currentUser.uid);
+    //console.log(this.currentUser)
   }
 
   ionViewDidLoad() {
@@ -31,6 +38,15 @@ export class MatchPage {
       this.allUsers = snapshot.val();
       this.selectUsers();
     });
+
+    firebase.database().ref('/users/' + this.currentUser.uid).once('value', snapshot => {
+        const userData = snapshot.val();
+        if (userData) {
+          this.person = userData;
+        }
+    });
+  
+
   }
 
   selectUsers() {
@@ -46,10 +62,11 @@ export class MatchPage {
   chatUser(user): void {
 
     const rooms = firebase.database().ref('chatrooms');
-    const currUser = firebase.auth().currentUser;
-    const email_set = new Set([currUser.email,user.email])
-    var key = '', nickname = currUser.displayName, otherNickname = user.username, roomFound = false;
+    //const currUser = firebase.auth().currentUser;
+    const email_set = new Set([this.person.email, user.email]);
+    var key = '', nickname = this.person.username, otherNickname = user.username, roomFound = false;
     const chatID = objectHash(email_set);
+    console.log(nickname)
     console.log(chatID)
 
     // Check if in db
