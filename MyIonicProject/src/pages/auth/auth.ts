@@ -6,7 +6,7 @@ import {
    Validators } from '@angular/forms';
 
 import { AuthProvider } from '../../providers/auth/auth';
-import { ProfilePage } from '../profile/profile';
+import { ChatsPage } from '../chats/chats';
 
 @IonicPage()
 @Component({
@@ -72,7 +72,7 @@ export class AuthPage {
       this._AUTH.loginWithEmailAndPassword(this.data.email, this.data.password)
       .then((auth: any) => {
         loading.dismiss();
-        this.navCtrl.setRoot(ProfilePage);
+        this.navCtrl.setRoot(ChatsPage);
       })
       .catch((error: any) => {
         loading.dismiss();
@@ -81,7 +81,7 @@ export class AuthPage {
       });
     } else {
       loading.dismiss();
-      this.presentText('Invalid inputs. Please try again.')
+      this.presentText('Invalid inputs. Please try again.');
     }
   }
 }

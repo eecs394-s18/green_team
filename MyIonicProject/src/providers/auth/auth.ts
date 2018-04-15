@@ -59,7 +59,36 @@ export class AuthProvider {
       });
    }
 
+   /**
+    * Use Firebase Web API createUserWithEmailAndPassword method
+    * to make a new user for our app
+    *
+    * @method createUserWithEmailAndPassword
+    * @param email    {string}      User e-mail address
+    * @param password {string}      E-mail account password
+    * @return {Promise}
+    */
 
+
+   createUserWithEmailAndPassword(email: string,
+                                  password: string): Promise<any>
+   {
+       return new Promise((resolve, reject) =>
+       {
+           firebase
+           .auth()
+           .createUserWithEmailAndPassword(email, password)
+           .then((val: any) =>
+            {
+                resolve(val);
+            })
+            .catch((error: any) =>
+            {
+                reject(error);
+            });
+        });
+
+   }
 
 
    /**
