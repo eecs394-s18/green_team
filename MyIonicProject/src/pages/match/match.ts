@@ -114,8 +114,7 @@ export class MatchPage {
     this.navCtrl.setRoot(ChatPage, {
       key: chatID,
       nickname: nickname,
-      otherNickname: otherNickname,
-      existingChat: false
+      otherNickname: otherNickname
     });
   }
 }

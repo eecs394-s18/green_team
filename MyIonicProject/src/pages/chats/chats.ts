@@ -21,13 +21,15 @@ export class ChatsPage {
   public existingChats;
   private loading;
   private nameToUUID;
+  private nameToChatID;
   private currentUser;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
     this.allUsers = {};
     this.chosenUsers = [];
     this.existingChats = {};
-    this.nameToUUID = {}; // Map username to UUID in allUsers
+    this.nameToUUID = {}; // Map username to UUID in allUsers to allow for showing users
+    this.nameToChatID = {}; // Map target name to chat ID to allow for easy joining
     this.currentUser = firebase.auth().currentUser;
   }
 
@@ -44,9 +46,9 @@ export class ChatsPage {
       const ref = firebase.database().ref('users');
       const users = ref.on('value', snapshot => {
         this.allUsers = snapshot.val();
-        for (var uuid in this.allUsers) {
-          if (this.allUsers.hasOwnProperty(uuid)) {
-            this.nameToUUID[this.allUsers[uuid]['username']] = uuid;
+        for (var key in this.allUsers) {
+          if (this.allUsers.hasOwnProperty(key)) {
+            this.nameToUUID[this.allUsers[key]['username']] = key;
           }
         }
         this.selectUsers();
@@ -78,6 +80,7 @@ export class ChatsPage {
           if (currUser.displayName in chats[key]['members']) {
             delete chats[key]['members'][currUser.displayName];
             this.chosenUsers.push(this.allUsers[this.nameToUUID[Object.keys(chats[key]['members'])[0]]]);
+            this.nameToChatID[Object.keys(chats[key]['members'])[0]] = key;
           }
         }
       }
@@ -87,10 +90,9 @@ export class ChatsPage {
 
   chatUser(user): void {
     this.navCtrl.setRoot(ChatPage, {
-      key: this.nameToUUID[user.username],
+      key: this.nameToChatID[user.username], // key of the chatroom
       nickname: firebase.auth().currentUser.displayName,
-      otherNickname: user.username,
-      existingChat: true
+      otherNickname: user.username
     });
   }
 
