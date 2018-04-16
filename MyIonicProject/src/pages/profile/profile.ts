@@ -29,16 +29,21 @@ export class ProfilePage {
     });
     loading.present();
 
-    firebase.database().ref('/users/' + this.user.uid).once('value', snapshot => {
-        const userData = snapshot.val();
-        if (userData) {
-          loading.dismiss();
-          this.person = userData;
-        } else {
-          loading.dismiss();
-          this.presentText('Unable to get your profile. Please try again.');
-        }
-    });
+    if (this.user == null) {
+      loading.dismiss();
+      this.presentText('You are not signed in. Please sign in and try again.');
+    } else {
+      firebase.database().ref('/users/' + this.user.uid).once('value', snapshot => {
+          const userData = snapshot.val();
+          if (userData) {
+            loading.dismiss();
+            this.person = userData;
+          } else {
+            loading.dismiss();
+            this.presentText('Unable to get your profile. Please try again.');
+          }
+      });
+    }
   }
 
   presentText(text) {

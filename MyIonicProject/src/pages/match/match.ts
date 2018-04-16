@@ -39,14 +39,28 @@ export class MatchPage {
       this.selectUsers();
     });
 
-    firebase.database().ref('/users/' + this.currentUser.uid).once('value', snapshot => {
-        const userData = snapshot.val();
-        if (userData) {
-          this.person = userData;
-        }
-    });
-  
+    if (this.currentUser == null) {
+      this.loading.dismiss();
+      this.presentText('You are not signed in. Please sign in and try again.')
+    } else {
+      firebase.database().ref('/users/' + this.currentUser.uid).once('value', snapshot => {
+          const userData = snapshot.val();
+          if (userData) {
+            this.person = userData;
+          }
+      });
+    }
+  }
 
+  presentText(text) {
+    let loading = this.loadingCtrl.create({
+      spinner: 'hide',
+      content: text
+    });
+    loading.present();
+    setTimeout(() => {
+      loading.dismiss();
+    }, 1500);
   }
 
   selectUsers() {

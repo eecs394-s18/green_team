@@ -1,8 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, Content, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ChatPage } from '../chat/chat';
 import * as firebase from 'Firebase';
-import * as objectHash from 'object-hash';
 /**
  * Generated class for the ChatsPage page.
  *
@@ -22,12 +21,14 @@ export class ChatsPage {
   public existingChats;
   private loading;
   private nameToUUID;
+  private currentUser;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
     this.allUsers = {};
     this.chosenUsers = [];
     this.existingChats = {};
     this.nameToUUID = {}; // Map username to UUID in allUsers
+    this.currentUser = firebase.auth().currentUser;
   }
 
   ionViewDidLoad() {
@@ -36,16 +37,32 @@ export class ChatsPage {
     });
     this.loading.present();
 
-    const ref = firebase.database().ref('users');
-    const users = ref.on('value', snapshot => {
-      this.allUsers = snapshot.val();
-      for (var uuid in this.allUsers) {
-        if (this.allUsers.hasOwnProperty(uuid)) {
-          this.nameToUUID[this.allUsers[uuid]['username']] = uuid;
+    if (this.currentUser == null) {
+      this.loading.dismiss();
+      this.presentText('You are not signed in. Please sign in and try again.');
+    } else {
+      const ref = firebase.database().ref('users');
+      const users = ref.on('value', snapshot => {
+        this.allUsers = snapshot.val();
+        for (var uuid in this.allUsers) {
+          if (this.allUsers.hasOwnProperty(uuid)) {
+            this.nameToUUID[this.allUsers[uuid]['username']] = uuid;
+          }
         }
-      }
-      this.selectUsers();
+        this.selectUsers();
+      });
+    }
+  }
+
+  presentText(text) {
+    let loading = this.loadingCtrl.create({
+      spinner: 'hide',
+      content: text
     });
+    loading.present();
+    setTimeout(() => {
+      loading.dismiss();
+    }, 1500);
   }
 
   selectUsers() {
