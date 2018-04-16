@@ -33,10 +33,19 @@ export class ChatPage {
     this.roomkey = this.navParams.get("key") as string;
     this.nickname = this.navParams.get("nickname") as string;
     this.otherNickname = this.navParams.get("otherNickname") as string;
+    let existingChat = this.navParams.get("existingChat") as boolean;
     this.data.type = 'message';
     this.data.nickname = this.nickname;
 
-    let joinData = firebase.database().ref('chatrooms/'+this.roomkey+'/chats').push();
+    let joinData = firebase.database().ref('chatrooms/'+this.roomkey);
+    // // Create completely new chat
+    // let joinData = firebase.database().ref('chatrooms/'+this.roomkey+'/chats').push();
+    //
+    // // Use existing chat
+    // if (existingChat) {
+    //   joinData = firebase.database().ref('chatrooms/'+this.roomkey);
+    // }
+
     joinData.set({
       type:'join',
       user:this.nickname,

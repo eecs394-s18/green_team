@@ -89,7 +89,8 @@ export class ChatsPage {
     this.navCtrl.setRoot(ChatPage, {
       key: this.nameToUUID[user.username],
       nickname: firebase.auth().currentUser.displayName,
-      otherNickname: user.username
+      otherNickname: user.username,
+      existingChat: true
     });
   }
 
