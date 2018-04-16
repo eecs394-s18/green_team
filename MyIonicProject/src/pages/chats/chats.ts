@@ -92,7 +92,8 @@ export class ChatsPage {
     this.navCtrl.setRoot(ChatPage, {
       key: this.nameToChatID[user.username], // key of the chatroom
       nickname: firebase.auth().currentUser.displayName,
-      otherNickname: user.username
+      otherNickname: user.username,
+      matches: false
     });
   }
 

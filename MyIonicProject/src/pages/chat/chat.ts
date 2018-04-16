@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, Content } from 'ionic-angular';
 import { RoomPage } from '../room/room';
 import { MatchPage } from '../match/match'
+import { ChatsPage } from '../chats/chats'
 import * as firebase from 'Firebase';
 
 /**
@@ -27,12 +28,14 @@ export class ChatPage {
   roomkey:string;
   nickname:string;
   otherNickname:string;
+  matches:boolean;
   offStatus:boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.roomkey = this.navParams.get("key") as string;
     this.nickname = this.navParams.get("nickname") as string;
     this.otherNickname = this.navParams.get("otherNickname") as string;
+    this.matches = this.navParams.get("matches") as boolean;
     this.data.type = 'message';
     this.data.nickname = this.nickname;
 
@@ -80,11 +83,27 @@ export class ChatPage {
 
 	  this.offStatus = true;
 
-	  this.navCtrl.setRoot(MatchPage);
+    if (this.matches) {
+      this.navCtrl.setRoot(MatchPage);
+    } else {
+      this.navCtrl.setRoot(ChatsPage);
+    }
 	}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatPage');
+  }
+
+  ionViewDidLeave() {
+    let exitData = firebase.database().ref('chatrooms/'+this.roomkey+'/chats').push();
+	  exitData.set({
+	    type:'exit',
+	    user:this.nickname,
+	    message:this.nickname+' has exited this room.',
+	    sendDate:Date()
+	  });
+
+	  this.offStatus = true;
   }
 
 }
