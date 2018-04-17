@@ -83,9 +83,9 @@ export class MyApp {
     let loading = this.loadingCtrl.create({
       content: 'Logging out...'
     })
-    loading.present();
 
     if (firebase.auth().currentUser != null) {
+      loading.present();
       firebase.auth().signOut()
         .then(() => {
           loading.dismiss();
@@ -97,6 +97,8 @@ export class MyApp {
           this.presentText(error.message);
           console.log(error);
         });
+    } else {
+      this.presentText('You are not signed in. Please sign in and try again.')
     }
   }
 
