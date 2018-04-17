@@ -2,7 +2,7 @@
 
 import { Component, ViewChild } from '@angular/core';
 
-import { Platform, MenuController, Nav } from 'ionic-angular';
+import { Platform, MenuController, Nav, LoadingController } from 'ionic-angular';
 
 import { RoomPage } from '../pages/room/room';
 import { AddRoomPage } from '../pages/add-room/add-room';
@@ -40,12 +40,14 @@ export class MyApp {
 
   rootPage = AuthPage;
   pages: Array<{title: string, component: any}>;
+  private loadingCtrl: LoadingController;
 
   constructor(
     public platform: Platform,
     public menu: MenuController,
     public statusBar: StatusBar,
-    public splashScreen: SplashScreen
+    public splashScreen: SplashScreen,
+    private loadingCtrl: LoadingController
   ) {
     //firebase.initializeApp(config);
 
@@ -57,7 +59,6 @@ export class MyApp {
       // { title: 'Authentication', component: AuthPage },
       { title: 'Find a New Match', component: MatchPage },
       { title: 'Chats', component: ChatsPage},
-      // { title: 'Create Account', component: NewuserPage}
     ];
   }
 
@@ -75,5 +76,38 @@ export class MyApp {
     this.menu.close();
     // navigate to the new page if it is not the current page
     this.nav.setRoot(page.component);
+  }
+
+  logOut() {
+
+    let loading = this.loadingCtrl.create({
+      content: 'Logging out...'
+    })
+    loading.present();
+
+    if (firebase.auth().currentUser != null) {
+      firebase.auth().signOut()
+        .then(() => {
+          loading.dismiss();
+          this.presentText('Log out success!');
+          this.openPage({component: AuthPage});
+        })
+        .catch((error: any) => {
+          loading.dismiss();
+          this.presentText(error.message);
+          console.log(error);
+        });
+    }
+  }
+
+  presentText(text) {
+    let loading = this.loadingCtrl.create({
+      spinner: 'hide',
+      content: text
+    });
+    loading.present();
+    setTimeout(() => {
+      loading.dismiss();
+    }, 1500);
   }
 }
