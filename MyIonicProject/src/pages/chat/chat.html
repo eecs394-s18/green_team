@@ -7,12 +7,13 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
+      <button ion-button icon-only (click)="exitChat()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
       {{ otherNickname }}
     </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="exitChat()">
-        <ion-icon name="exit"></ion-icon>
-      </button>
+
     </ion-buttons>
   </ion-navbar>
 </ion-header>
