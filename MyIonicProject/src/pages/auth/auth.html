@@ -6,6 +6,7 @@
 -->
 <ion-header>
    <ion-navbar>
+     <!-- TODO: REMOVE LATER -->
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
@@ -21,7 +22,7 @@
      src="assets/imgs/logo.png"
      alt="Ionic Framework logo">
 
-  <form name="logInForm" (ngSubmit)="logIn()">
+  <form name="logInForm">
     <ion-list>
       <ion-item>
         <ion-label floating>Your E-mail Address</ion-label>
@@ -40,18 +41,28 @@
           [(ngModel)]="data.password"
           required></ion-input>
       </ion-item>
-
-      <ion-item>
-        <button
-           ion-button
-           color="primary"
-           text-center
-           block
-           [disabled]="false"
-           >Log In</button>
-      </ion-item>
     </ion-list>
   </form>
+  <ion-item>
+    <button
+       ion-button
+       color="primary"
+       text-center
+       block
+       [disabled]="false"
+       (click)="logIn()"
+       >Log In</button>
+  </ion-item>
+  <ion-item>
+    <button
+       ion-button
+       color="primary"
+       text-center
+       block
+       [disabled]="false"
+       (click)="createAccount()"
+       >Create Account</button>
+  </ion-item>
 </ion-content>
 
 <!-- <ion-content padding>

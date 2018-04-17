@@ -20,16 +20,14 @@ export class ChatsPage {
   public chosenUsers;
   public existingChats;
   private loading;
-  private nameToUUID;
-  private nameToChatID;
+  private UUIDToChatID;
   private currentUser;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
     this.allUsers = {};
     this.chosenUsers = [];
     this.existingChats = {};
-    this.nameToUUID = {}; // Map username to UUID in allUsers to allow for showing users
-    this.nameToChatID = {}; // Map target name to chat ID to allow for easy joining
+    this.UUIDToChatID = {}; // Map target uuid to chat ID to allow for easy joining
     this.currentUser = firebase.auth().currentUser;
   }
 
@@ -46,11 +44,6 @@ export class ChatsPage {
       const ref = firebase.database().ref('users');
       const users = ref.on('value', snapshot => {
         this.allUsers = snapshot.val();
-        for (var key in this.allUsers) {
-          if (this.allUsers.hasOwnProperty(key)) {
-            this.nameToUUID[this.allUsers[key]['username']] = key;
-          }
-        }
         this.selectUsers();
       });
     }
@@ -77,10 +70,12 @@ export class ChatsPage {
       const chats = snap.val();
       for (var key in chats) {
         if (chats.hasOwnProperty(key)) {
-          if (currUser.displayName in chats[key]['members']) {
-            delete chats[key]['members'][currUser.displayName];
-            this.chosenUsers.push(this.allUsers[this.nameToUUID[Object.keys(chats[key]['members'])[0]]]);
-            this.nameToChatID[Object.keys(chats[key]['members'])[0]] = key;
+          if (currUser.uid in chats[key]['members']) {
+            delete chats[key]['members'][currUser.uid];
+            let obj = this.allUsers[Object.keys(chats[key]['members'])[0]];
+            obj['id'] = Object.keys(chats[key]['members'])[0];
+            this.chosenUsers.push(obj);
+            this.UUIDToChatID[Object.keys(chats[key]['members'])[0]] = key;
           }
         }
       }
@@ -90,7 +85,7 @@ export class ChatsPage {
 
   chatUser(user): void {
     this.navCtrl.setRoot(ChatPage, {
-      key: this.nameToChatID[user.username], // key of the chatroom
+      key: this.UUIDToChatID[user.id], // key of the chatroom
       nickname: firebase.auth().currentUser.displayName,
       otherNickname: user.username,
       matches: false

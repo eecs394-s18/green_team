@@ -20,6 +20,12 @@ export class ProfilePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
     this.person = {username: undefined, email: undefined, country: undefined, languages: undefined};
+
+    let email = this.navParams.get("email") as string;
+    console.log(email);
+    if (email) {
+      this.person.email = email
+    }
     this.user = firebase.auth().currentUser;
   }
 

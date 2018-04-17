@@ -72,7 +72,10 @@ export class MatchPage {
       if (this.currentUser.displayName == this.allUsers[keys[i]]['username']) {
         continue;
       }
-      this.chosenUsers.push(this.allUsers[keys[i]]);
+      let obj = this.allUsers[keys[i]];
+      obj['id'] = keys[i];
+      this.chosenUsers.push(obj);
+      // this.chosenUsers.push(this.allUsers[keys[i]]);
     }
     this.loading.dismiss();
   }
@@ -82,7 +85,9 @@ export class MatchPage {
     const rooms = firebase.database().ref('chatrooms');
     //const currUser = firebase.auth().currentUser;
     const email_set = new Set([this.person.email, user.email]);
-    var key = '', nickname = this.person.username, otherNickname = user.username, roomFound = false;
+    var key = '', roomFound = false;
+    var nickname = this.person.username, otherNickname = user.username;
+    var email = this.person.email, otherEmail = user.email;
     const chatID = objectHash(email_set);
     console.log(nickname)
     console.log(chatID)
@@ -99,8 +104,8 @@ export class MatchPage {
         var tmp = {}
         tmp[chatID] = {}
         tmp[chatID]['members'] = {}
-        tmp[chatID]['members'][nickname] = true;
-        tmp[chatID]['members'][otherNickname] = true;
+        tmp[chatID]['members'][this.currentUser.uid] = true;
+        tmp[chatID]['members'][user.id] = true;
 
         console.log('outside: ', this);
 
