@@ -40,7 +40,6 @@ export class MyApp {
 
   rootPage = AuthPage;
   pages: Array<{title: string, component: any}>;
-  private loadingCtrl: LoadingController;
 
   constructor(
     public platform: Platform,
