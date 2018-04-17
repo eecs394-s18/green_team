@@ -72,17 +72,8 @@ export class ChatPage {
     this.data.message = '';
 	}
 
+  // This runs before ionViewDidLeave()
 	exitChat() {
-	  let exitData = firebase.database().ref('chatrooms/'+this.roomkey+'/chats').push();
-	  exitData.set({
-	    type:'exit',
-	    user:this.nickname,
-	    message:this.nickname+' has exited this room.',
-	    sendDate:Date()
-	  });
-
-	  this.offStatus = true;
-
     if (this.matches) {
       this.navCtrl.setRoot(MatchPage);
     } else {
