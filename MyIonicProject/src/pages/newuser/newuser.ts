@@ -60,10 +60,6 @@ export class NewuserPage {
   }
 
   createUser(): void {
-      let email: any = this.form.controls['email'].value;
-      let password: any = this.form.controls['password'].value;
-      let r_password: any = this.form.controls['r_password'].value
-
       let loading = this.loadingCtrl.create({content: 'Loading...'});
 
       loading.present();
@@ -72,7 +68,9 @@ export class NewuserPage {
           this._AUTH.createUserWithEmailAndPassword(this.data.email, this.data.password)
           .then((auth: any) => {
               loading.dismiss();
-              this.navCtrl.setRoot(ProfilePage);
+              this.navCtrl.setRoot(ProfilePage, {
+                email: this.data.email
+              });
           })
       .catch((error: any) => {
           loading.dismiss();

@@ -7,6 +7,7 @@ import {
 
 import { AuthProvider } from '../../providers/auth/auth';
 import { ChatsPage } from '../chats/chats';
+import { NewuserPage } from '../newuser/newuser';
 
 @IonicPage()
 @Component({
@@ -48,6 +49,10 @@ export class AuthPage {
      setTimeout(() => {
        loading.dismiss();
      }, 2000);
+   }
+
+   createAccount() {
+     this.navCtrl.setRoot(NewuserPage);
    }
 
    /**
