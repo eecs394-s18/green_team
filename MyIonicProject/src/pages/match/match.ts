@@ -33,23 +33,24 @@ export class MatchPage {
     });
     this.loading.present();
 
+    if (this.currentUser == null) {
+      this.loading.dismiss();
+      this.presentText('You are not signed in. Please sign in and try again.')
+      return
+    }
+
     const ref = firebase.database().ref('users');
     const users = ref.on('value', snapshot => {
       this.allUsers = snapshot.val();
       this.selectUsers();
     });
 
-    if (this.currentUser == null) {
-      this.loading.dismiss();
-      this.presentText('You are not signed in. Please sign in and try again.')
-    } else {
-      firebase.database().ref('/users/' + this.currentUser.uid).once('value', snapshot => {
-          const userData = snapshot.val();
-          if (userData) {
-            this.person = userData;
-          }
-      });
-    }
+    firebase.database().ref('/users/' + this.currentUser.uid).once('value', snapshot => {
+        const userData = snapshot.val();
+        if (userData) {
+          this.person = userData;
+        }
+    });
   }
 
   presentText(text) {
@@ -68,6 +69,9 @@ export class MatchPage {
 
     let keys:string[] = Object.keys(this.allUsers);
     for (let i:number = 0; i < 5; i++) {
+      if (this.currentUser.displayName == this.allUsers[keys[i]]['username']) {
+        continue;
+      }
       this.chosenUsers.push(this.allUsers[keys[i]]);
     }
     this.loading.dismiss();
