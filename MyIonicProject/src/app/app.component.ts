@@ -59,7 +59,6 @@ export class MyApp {
       // { title: 'Authentication', component: AuthPage },
       { title: 'Find a New Match', component: MatchPage },
       { title: 'Chats', component: ChatsPage},
-      { title: 'Create Account', component: NewuserPage},
     ];
   }
 
