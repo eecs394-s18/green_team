@@ -30,6 +30,7 @@ export class MatchPage {
   }
 
   ionViewDidLoad() {
+    console.log('loading match.ts')
     this.loading = this.loadingCtrl.create({
       content: 'Getting matches...'
     });
@@ -59,6 +60,13 @@ export class MatchPage {
           this.person = userData;
         }
     });
+
+    // test query
+    var query = {
+      countries:[],
+      languages:[]
+    }
+    this.findMatchingUsers(query);
   }
 
   presentText(text) {
@@ -141,6 +149,17 @@ export class MatchPage {
       nickname: nickname,
       otherNickname: otherNickname,
       matches: true
+    });
+  }
+
+  findMatchingUsers(query){
+    console.log(query)
+    const ref = firebase.database().ref('users');
+    const users = ref.once('value', snapshot => {
+      var userProfiles = snapshot.val();
+      for(var up in userProfiles){
+        console.log(up)
+      }
     });
   }
 }
