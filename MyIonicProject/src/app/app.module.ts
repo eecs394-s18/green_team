@@ -19,9 +19,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HttpModule } from '@angular/http';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireModule } from 'angularfire2';
 import { FirebaseProvider } from './../providers/firebase/firebase';
-
 
 import * as firebase from 'firebase';
 
@@ -58,6 +58,7 @@ firebase.initializeApp(environment.firebase);
     BrowserModule,
     HttpModule,
     AngularFireDatabaseModule,
+    AngularFireStorageModule,
     //AngularFireModule.initializeApp(config),
     IonicModule.forRoot(MyApp)
   ],

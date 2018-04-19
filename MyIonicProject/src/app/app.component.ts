@@ -20,7 +20,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import * as firebase from 'Firebase';
-import { environment } from '../environments/environment';
+//import { environment } from '../environments/environment';
 
 
 //const config = {
