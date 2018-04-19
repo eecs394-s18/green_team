@@ -15,6 +15,7 @@ export class MatchPage {
   public allUsers;
   public chosenUsers;
   private loading;
+  private userRooms;
   currentUser: any;
   public person: {username: string, email: string, country: string, languages: string};
 
@@ -22,6 +23,7 @@ export class MatchPage {
     this.allUsers = {};
     this.chosenUsers = [];
     this.currentUser = firebase.auth().currentUser;
+    this.userRooms = {};
 
     //this.currentUser = firebase.database().ref('users/' + firebase.auth().currentUser.uid);
     //console.log(this.currentUser)
@@ -40,9 +42,15 @@ export class MatchPage {
     }
 
     const ref = firebase.database().ref('users');
-    const users = ref.on('value', snapshot => {
+    const users = ref.once('value', snapshot => {
       this.allUsers = snapshot.val();
-      this.selectUsers();
+
+      // Get chatrooms of current user for filtering
+      ref.child(this.currentUser.uid+'/rooms/').once('value', snapshot => {
+        this.userRooms = snapshot.val();
+        if (this.userRooms == null) this.userRooms = {};
+        this.selectUsers();
+      })
     });
 
     firebase.database().ref('/users/' + this.currentUser.uid).once('value', snapshot => {
@@ -68,14 +76,16 @@ export class MatchPage {
     // TODO: Algorithm for matching users goes here.
 
     let keys:string[] = Object.keys(this.allUsers);
-    for (let i:number = 0; i < 5; i++) {
+    for (let i:number = 0; i < keys.length; i++) {
       if (this.currentUser.displayName == this.allUsers[keys[i]]['username']) {
         continue;
       }
       let obj = this.allUsers[keys[i]];
       obj['id'] = keys[i];
+
+      // Check if the room already exists
+      if (this.userRooms.hasOwnProperty(keys[i])) continue;
       this.chosenUsers.push(obj);
-      // this.chosenUsers.push(this.allUsers[keys[i]]);
     }
     this.loading.dismiss();
   }
@@ -111,6 +121,12 @@ export class MatchPage {
 
         rooms.update(tmp).then(res => {
           console.log('inside: ', this);
+
+          // Add to current user and other user's info
+          let users = firebase.database().ref('users')
+          users.child(this.currentUser.uid + '/rooms/' + user.id).set(true)
+          users.child(user.id + '/rooms/' + this.currentUser.uid).set(true)
+
           this.navigateToChat(chatID, nickname, otherNickname);
         }).catch(error => {
           console.log(error.message);
