@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { StorageProvider } from '../../providers/storage/storage'
 import * as firebase from 'Firebase';
 
 /**
@@ -44,6 +45,9 @@ export class ProfilePage {
     if (!this.new) {
       loading.present();
     }
+
+    // replace filename with prof pic name from DB
+    this.storageProvider.getPictureURL('Kellogg01.jpg').then(url => this.pic = url);
 
     if (this.user == null) {
       loading.dismiss();

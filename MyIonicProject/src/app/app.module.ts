@@ -26,6 +26,7 @@ import { FirebaseProvider } from './../providers/firebase/firebase';
 import * as firebase from 'firebase';
 
 import { AuthProvider } from '../providers/auth/auth';
+import { StorageProvider } from '../providers/storage/storage';
 import { environment } from '../environments/environment';
 
 firebase.initializeApp(environment.firebase);
@@ -81,7 +82,8 @@ firebase.initializeApp(environment.firebase);
     SplashScreen,
     FirebaseProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthProvider
+    AuthProvider,
+    StorageProvider
   ]
 })
 export class AppModule {}
