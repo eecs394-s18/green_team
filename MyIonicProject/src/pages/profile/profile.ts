@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { StorageProvider } from '../../providers/storage/storage';
 import { ImagePicker } from '@ionic-native/image-picker';
