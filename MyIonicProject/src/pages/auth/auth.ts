@@ -65,8 +65,6 @@ export class AuthPage {
     */
    logIn(): void {
 
-    let email: any = this.form.controls['email'].value,
-    password: any = this.form.controls['password'].value;
 
     let loading = this.loadingCtrl.create({
       content: 'Loading...'

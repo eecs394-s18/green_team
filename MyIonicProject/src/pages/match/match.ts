@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Content, LoadingController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ChatPage } from '../chat/chat';
 import * as firebase from 'Firebase';
 import * as objectHash from 'object-hash';
@@ -41,17 +41,6 @@ export class MatchPage {
       return
     }
 
-    const ref = firebase.database().ref('users');
-    const users = ref.once('value', snapshot => {
-      this.allUsers = snapshot.val();
-
-      // Get chatrooms of current user for filtering
-      ref.child(this.currentUser.uid+'/rooms/').once('value', snapshot => {
-        this.userRooms = snapshot.val();
-        if (this.userRooms == null) this.userRooms = {};
-        this.selectUsers();
-      })
-    });
 
     firebase.database().ref('/users/' + this.currentUser.uid).once('value', snapshot => {
         const userData = snapshot.val();
@@ -95,9 +84,7 @@ export class MatchPage {
     const rooms = firebase.database().ref('chatrooms');
     //const currUser = firebase.auth().currentUser;
     const email_set = new Set([this.person.email, user.email]);
-    var key = '', roomFound = false;
     var nickname = this.person.username, otherNickname = user.username;
-    var email = this.person.email, otherEmail = user.email;
     const chatID = objectHash(email_set);
     console.log(nickname)
     console.log(chatID)

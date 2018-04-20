@@ -4,18 +4,12 @@ import { Component, ViewChild } from '@angular/core';
 
 import { Platform, MenuController, Nav, LoadingController } from 'ionic-angular';
 
-import { RoomPage } from '../pages/room/room';
-import { AddRoomPage } from '../pages/add-room/add-room';
-import { ChatPage } from '../pages/chat/chat';
-import { ProfilesPage } from '../pages/profiles/profiles';
+
 import { ProfilePage } from '../pages/profile/profile';
 import { MatchPage } from '../pages/match/match';
 import { AuthPage } from '../pages/auth/auth';
 import { ChatsPage } from '../pages/chats/chats';
-import { NewuserPage } from '../pages/newuser/newuser'
 
-import { AuthProvider } from '../providers/auth/auth';
-import { StorageProvider } from '../providers/storage/storage';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';

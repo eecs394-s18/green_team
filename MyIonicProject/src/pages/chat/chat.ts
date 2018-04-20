@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, Content } from 'ionic-angular';
-import { RoomPage } from '../room/room';
 import { MatchPage } from '../match/match'
 import { ChatsPage } from '../chats/chats'
 import * as firebase from 'Firebase';
