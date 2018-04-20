@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { StorageProvider } from '../../providers/storage/storage'
 import * as firebase from 'Firebase';
 
 /**
@@ -15,10 +16,16 @@ import * as firebase from 'Firebase';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
+
   public person: {username: string, email: string, country: string, languages: string};
+  public pic: string;
   user: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public loadingCtrl: LoadingController,
+              private storageProvider: StorageProvider) {
+
     this.person = {username: undefined, email: undefined, country: undefined, languages: undefined};
 
     let email = this.navParams.get("email") as string;
@@ -34,6 +41,9 @@ export class ProfilePage {
       content: 'Getting profile...'
     });
     loading.present();
+
+    // replace filename with prof pic name from DB
+    this.storageProvider.getPictureURL('Kellogg01.jpg').then(url => this.pic = url);
 
     if (this.user == null) {
       loading.dismiss();

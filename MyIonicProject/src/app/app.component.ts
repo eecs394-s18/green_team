@@ -15,6 +15,7 @@ import { ChatsPage } from '../pages/chats/chats';
 import { NewuserPage } from '../pages/newuser/newuser'
 
 import { AuthProvider } from '../providers/auth/auth';
+import { StorageProvider } from '../providers/storage/storage';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';

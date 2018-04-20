@@ -1,21 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 import * as firebase from 'Firebase';
 
 @Injectable()
 export class StorageProvider {
 
-  constructor(private db: AngularFireDatabase, private afStorage: AngularFireStorage) {}
+  getPictureURL(relative) {
 
-
- 
-  getFiles() {
-    let ref = this.db.list('files');
-
-    return ref.snapshotChanges().map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
+    return firebase.storage().ref(`profiles/${relative}`).getDownloadURL();
   }
 
   uploadToStorage(information): AngularFireUploadTask {
