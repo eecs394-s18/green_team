@@ -23,6 +23,8 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireModule } from 'angularfire2';
 import { FirebaseProvider } from './../providers/firebase/firebase';
 
+import { ImagePicker } from '@ionic-native/image-picker';
+
 import * as firebase from 'firebase';
 
 import { AuthProvider } from '../providers/auth/auth';
@@ -83,7 +85,8 @@ firebase.initializeApp(environment.firebase);
     FirebaseProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
-    StorageProvider
+    StorageProvider,
+    ImagePicker
   ]
 })
 export class AppModule {}
