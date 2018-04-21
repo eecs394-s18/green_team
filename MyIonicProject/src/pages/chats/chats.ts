@@ -68,12 +68,22 @@ export class ChatsPage {
     rooms.once('value')
     .then(snap => {
       const chats = snap.val();
+      console.log(snap);
+      console.log(chats);
       for (var key in chats) {
         if (chats.hasOwnProperty(key)) {
           if (currUser.uid in chats[key]['members']) {
             delete chats[key]['members'][currUser.uid];
             let obj = this.allUsers[Object.keys(chats[key]['members'])[0]];
             obj['id'] = Object.keys(chats[key]['members'])[0];
+            // add test to make sure at least one message exists
+            if (chats[key].hasOwnProperty('chats')) {
+                let msg_keys = Object.keys(chats[key]['chats']);
+                obj['last_msg'] = chats[key]['chats'][msg_keys[msg_keys.length - 1]]['message'];
+            }
+            else {
+                obj['last_msg'] = undefined;
+            }
             this.chosenUsers.push(obj);
             this.UUIDToChatID[Object.keys(chats[key]['members'])[0]] = key;
           }

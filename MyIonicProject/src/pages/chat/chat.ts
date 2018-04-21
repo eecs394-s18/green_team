@@ -41,7 +41,7 @@ export class ChatPage {
 
     // Create completely new chat
     let joinData = firebase.database().ref('chatrooms/'+this.roomkey+'/chats').push();
-
+    /*
     joinData.set({
       type:'join',
       user:this.nickname,
@@ -49,6 +49,7 @@ export class ChatPage {
       sendDate:Date()
     });
     this.data.message = '';
+    */
 
     firebase.database().ref('chatrooms/'+this.roomkey+'/chats').on('value', resp => {
       this.chats = [];
@@ -86,6 +87,7 @@ export class ChatPage {
   }
 
   ionViewDidLeave() {
+      /*
     let exitData = firebase.database().ref('chatrooms/'+this.roomkey+'/chats').push();
 	  exitData.set({
 	    type:'exit',
@@ -93,6 +95,7 @@ export class ChatPage {
 	    message:this.nickname+' has exited this room.',
 	    sendDate:Date()
 	  });
+      */
 
 	  this.offStatus = true;
   }
