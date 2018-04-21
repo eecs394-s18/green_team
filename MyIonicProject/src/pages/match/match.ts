@@ -112,15 +112,17 @@ export class MatchPage {
 
       // filter options shown
       if (query == null) {
-        this.chosenUsers.push(obj);
-      }
-      else {
-        console.log()
-        if ((this.allUsers[keys[i]]['country'] == query['country']) & (this.allUsers[keys[i]]['languages'].includes(query['languages']))) {
+        if (this.allUsers[keys[i]]['international'] != this.allUsers[this.currentUser.uid]['international']) {
           this.chosenUsers.push(obj);
         }
       }
-      
+      else {
+        if ((this.allUsers[keys[i]]['country'] == query['country']) && (this.allUsers[keys[i]]['languages'].includes(query['languages'])) &&
+         this.allUsers[keys[i]]['international'] != this.allUsers[this.currentUser.uid]['international']) {
+          this.chosenUsers.push(obj);
+        }
+      }
+
     }
     this.presentText2("Success!")
     this.loading.dismiss();
@@ -179,18 +181,6 @@ export class MatchPage {
       matches: true
     });
   }
-
-  // findMatchingUsers(query){
-  //   console.log("Query")
-  //   console.log(query)
-  //   const ref = firebase.database().ref('users');
-  //   const users = ref.once('value', snapshot => {
-  //     var userProfiles = snapshot.val();
-  //     for(var up in userProfiles){
-  //       console.log(up)
-  //     }
-  //   });
-  // }
 
   searchMatches() {
     // get the information of how user wants to filter

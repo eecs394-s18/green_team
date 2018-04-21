@@ -88,7 +88,6 @@ export class MyApp {
       firebase.auth().signOut()
         .then(() => {
           loading.dismiss();
-          this.presentText('Log out success!');
           this.openPage({component: AuthPage});
         })
         .catch((error: any) => {

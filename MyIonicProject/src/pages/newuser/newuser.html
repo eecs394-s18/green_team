@@ -18,7 +18,7 @@
 
 <ion-content padding>
 
-    <form name="NewUserForm" (ngSubmit)="createUser()">
+    <form #formCtrl="ngForm" name="NewUserForm" (ngSubmit)="createUser()">
         <ion-list>
             <ion-item>
                 <ion-label floating>E-mail Address</ion-label>
@@ -56,7 +56,7 @@
                     color="primary"
                     text-center
                     block
-                    [disabled]="false">
+                    [disabled]="!formCtrl.form.valid">
                 Sign Up</button>
             </ion-item>
         </ion-list>

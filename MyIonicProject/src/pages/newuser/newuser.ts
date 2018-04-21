@@ -69,7 +69,8 @@ export class NewuserPage {
           .then((auth: any) => {
               loading.dismiss();
               this.navCtrl.setRoot(ProfilePage, {
-                email: this.data.email
+                email: this.data.email,
+                new: true
               });
           })
       .catch((error: any) => {
