@@ -22,7 +22,7 @@
   <form #formCtrl="ngForm">
       <div align="center" *ngIf="formCtrl.form.valid">
 
-        <h1> Profile</h1>
+        <h1>Profile</h1>
         <img class="profile-image" src="assets/imgs/avatar.png">
           <h4>{{person.username}}, {{person.email}}, {{person.country}}, {{person.languages}}</h4>
       </div>
@@ -45,6 +45,11 @@
         <ion-label floating>Languages</ion-label>
         <ion-input [(ngModel)]="person.languages" name="languages" required>
         </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>International?</ion-label>
+        <ion-checkbox [(ngModel)]="person.international" name="international" checked="true">
+        </ion-checkbox>
       </ion-item>
 
   </ion-list>
