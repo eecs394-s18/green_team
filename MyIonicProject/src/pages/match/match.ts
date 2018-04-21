@@ -84,7 +84,7 @@ export class MatchPage {
     }, 1500);
   }
 
-  presentText(text) {
+  presentText2(text) {
     let loading = this.loadingCtrl.create({
       spinner: 'hide',
       content: text
@@ -115,13 +115,14 @@ export class MatchPage {
         this.chosenUsers.push(obj);
       }
       else {
+        console.log()
         if ((this.allUsers[keys[i]]['country'] == query['country']) & (this.allUsers[keys[i]]['languages'].includes(query['languages']))) {
           this.chosenUsers.push(obj);
         }
       }
       
     }
-    this.presentText("Success!")
+    this.presentText2("Success!")
     this.loading.dismiss();
   }
 
