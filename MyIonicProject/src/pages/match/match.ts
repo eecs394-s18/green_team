@@ -115,7 +115,6 @@ export class MatchPage {
         this.chosenUsers.push(obj);
       }
       else {
-        console.log()
         if ((this.allUsers[keys[i]]['country'] == query['country']) & (this.allUsers[keys[i]]['languages'].includes(query['languages']))) {
           this.chosenUsers.push(obj);
         }
