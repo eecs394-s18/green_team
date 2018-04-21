@@ -79,7 +79,9 @@ export class ChatsPage {
             // add test to make sure at least one message exists
             if (chats[key].hasOwnProperty('chats')) {
                 let msg_keys = Object.keys(chats[key]['chats']);
-                obj['last_msg'] = chats[key]['chats'][msg_keys[msg_keys.length - 1]]['message'];
+                let sender = chats[key]['chats'][msg_keys[msg_keys.length - 1]]['user'];
+
+                obj['last_msg'] = (sender == currUser.displayName ? 'Me: ' : sender + ': ') + chats[key]['chats'][msg_keys[msg_keys.length - 1]]['message'];
             }
             else {
                 obj['last_msg'] = undefined;
