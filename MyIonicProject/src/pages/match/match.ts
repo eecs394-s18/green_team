@@ -11,19 +11,20 @@ import * as objectHash from 'object-hash';
 
 export class MatchPage {
 
-
   public allUsers;
   public chosenUsers;
   private loading;
   private userRooms;
   currentUser: any;
   public person: {username: string, email: string, country: string, languages: string};
+  public filters: {username: string, email: string, country: string, languages: string}
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
     this.allUsers = {};
     this.chosenUsers = [];
     this.currentUser = firebase.auth().currentUser;
     this.userRooms = {};
+    this.filters = {username: undefined, email: undefined, country: undefined, languages: undefined};
 
     //this.currentUser = firebase.database().ref('users/' + firebase.auth().currentUser.uid);
     //console.log(this.currentUser)
@@ -50,7 +51,8 @@ export class MatchPage {
       ref.child(this.currentUser.uid+'/rooms/').once('value', snapshot => {
         this.userRooms = snapshot.val();
         if (this.userRooms == null) this.userRooms = {};
-        this.selectUsers();
+        // this.selectUsers();
+        this.loading.dismiss();
       })
     });
 
@@ -61,12 +63,14 @@ export class MatchPage {
         }
     });
 
+
+
     // test query
-    var query = {
-      countries:[],
-      languages:[]
-    }
-    this.findMatchingUsers(query);
+    // var query = {
+    //   countries:[],
+    //   languages:[]
+    // }
+    // this.findMatchingUsers(query);
   }
 
   presentText(text) {
@@ -80,21 +84,44 @@ export class MatchPage {
     }, 1500);
   }
 
-  selectUsers() {
-    // TODO: Algorithm for matching users goes here.
+  presentText(text) {
+    let loading = this.loadingCtrl.create({
+      spinner: 'hide',
+      content: text
+    });
+    loading.present();
+    setTimeout(() => {
+      loading.dismiss();
+    }, 1500);
+  }
 
+  selectUsers(query) {
+    // TODO: Algorithm for matching users goes here.
+    this.chosenUsers = []
     let keys:string[] = Object.keys(this.allUsers);
     for (let i:number = 0; i < keys.length; i++) {
       if (this.currentUser.displayName == this.allUsers[keys[i]]['username']) {
         continue;
       }
+
       let obj = this.allUsers[keys[i]];
       obj['id'] = keys[i];
 
       // Check if the room already exists
       if (this.userRooms.hasOwnProperty(keys[i])) continue;
-      this.chosenUsers.push(obj);
+
+      // filter options shown
+      if (query == null) {
+        this.chosenUsers.push(obj);
+      }
+      else {
+        if ((this.allUsers[keys[i]]['country'] == query['country']) & (this.allUsers[keys[i]]['languages'].includes(query['languages']))) {
+          this.chosenUsers.push(obj);
+        }
+      }
+      
     }
+    this.presentText("Success!")
     this.loading.dismiss();
   }
 
@@ -152,14 +179,25 @@ export class MatchPage {
     });
   }
 
-  findMatchingUsers(query){
-    console.log(query)
-    const ref = firebase.database().ref('users');
-    const users = ref.once('value', snapshot => {
-      var userProfiles = snapshot.val();
-      for(var up in userProfiles){
-        console.log(up)
-      }
-    });
+  // findMatchingUsers(query){
+  //   console.log("Query")
+  //   console.log(query)
+  //   const ref = firebase.database().ref('users');
+  //   const users = ref.once('value', snapshot => {
+  //     var userProfiles = snapshot.val();
+  //     for(var up in userProfiles){
+  //       console.log(up)
+  //     }
+  //   });
+  // }
+
+  searchMatches() {
+    // get the information of how user wants to filter
+    this.filters = {username: this.filters.username, email: this.filters.email, country: this.filters.country, languages: this.filters.languages}
+    this.selectUsers(this.filters)
+  }
+
+  showAll() {
+    this.selectUsers(null);
   }
 }

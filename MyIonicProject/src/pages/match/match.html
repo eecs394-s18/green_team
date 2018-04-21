@@ -3,11 +3,28 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Suggested People</ion-title>
+    <ion-title>Find a Match</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+
+  <form #formCtrl="ngForm">
+    <h5>Who do you want to talk to?</h5>
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Country</ion-label>
+        <ion-input type="text" [(ngModel)]="filters.country" name="country" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Language</ion-label>
+        <ion-input type="text" [(ngModel)]="filters.languages" name="languages" required></ion-input>
+      </ion-item>
+    </ion-list>
+    <button color="secondary" [disabled]="!formCtrl.form.valid" ion-button block (click)="searchMatches()">Search</button>
+
+  </form>
+  <button color="secondary" ion-button block (click)="showAll()">Show All</button>
 
   <ion-card *ngFor="let user of chosenUsers">
     <img src="assets/imgs/avatar.png" />
