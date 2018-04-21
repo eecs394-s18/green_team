@@ -15,11 +15,19 @@ import * as firebase from 'Firebase';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-  public person: {username: string, email: string, country: string, languages: string};
+  public person: {username: string, email: string, country: string, languages: string, international: boolean};
   user: any;
+  new: boolean
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
-    this.person = {username: undefined, email: undefined, country: undefined, languages: undefined};
+    this.person = {
+      username: undefined,
+      email: undefined,
+      country: undefined,
+      languages: undefined,
+      international: false
+    };
+    this.new = this.navParams.get("new") as boolean;
 
     let email = this.navParams.get("email") as string;
     console.log(email);
@@ -33,7 +41,9 @@ export class ProfilePage {
     let loading = this.loadingCtrl.create({
       content: 'Getting profile...'
     });
-    loading.present();
+    if (!this.new) {
+      loading.present();
+    }
 
     if (this.user == null) {
       loading.dismiss();
@@ -46,7 +56,9 @@ export class ProfilePage {
             this.person = userData;
           } else {
             loading.dismiss();
-            this.presentText('Unable to get your profile. Please try again.');
+            if (!this.new) {
+              this.presentText('Unable to get your profile. Please try again.');
+            }
           }
       });
     }
@@ -73,12 +85,7 @@ export class ProfilePage {
     loading.present();
 
     firebase.database().ref('users/' + this.user.uid)
-      .set({
-        username: this.person.username,
-        email: this.person.email,
-        country: this.person.country,
-        languages: this.person.languages
-      })
+      .set(this.person)
       .then(ref => {
         this.user.updateProfile({
           displayName: this.person.username,
@@ -88,20 +95,17 @@ export class ProfilePage {
             loading.dismiss();
             this.presentText('Success!')
           }).catch(error => {
-            console.log(error.message);
+            loading.dismiss();
+            this.presentText(error.message);
           })
         }).catch(error => {
-          console.log(error.message);
+          loading.dismiss();
+          this.presentText(error.message);
         })
       })
       .catch(error => {
-        console.log(error.message);
+        loading.dismiss();
+        this.presentText(error.message);
       })
   }
-
-  // TODO: Finish resetting profile
-  reset(): void {
-    console.log('reset profile to defaults');
-  }
-
 }

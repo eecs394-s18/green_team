@@ -31,6 +31,16 @@ export class AuthProvider {
       });
    }
 
+   getCurrentUser() {
+     return new Promise((resolve, reject) => {
+       if (firebase.auth().currentUser == null) {
+         reject('You are not signed in. Please sign in and try again.')
+       } else {
+         resolve(firebase.auth().currentUser)
+       }
+     })
+   }
+
    /**
     * Use Firebase Web API signInWithEmailAndPassword method
     * to authenticate user login attempt
