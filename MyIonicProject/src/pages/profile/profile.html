@@ -53,6 +53,50 @@
       </ion-item>
 
   </ion-list>
+  <ion-item>
+  <ion-label>Sports</ion-label>
+  <ion-select [(ngModel)]="sports" name="sports" multiple="true">
+    <ion-option>Basketball</ion-option>
+    <ion-option>Football</ion-option>
+    <ion-option>Soccer</ion-option>
+    <ion-option>Baseball</ion-option>
+    <ion-option>Badminton</ion-option>
+    <ion-option>Body Building</ion-option>
+    <ion-option>Golf</ion-option>
+    <ion-option>Lacrosse</ion-option>
+    <ion-option>Mountain Biking</ion-option>
+    <ion-option>Swimming</ion-option>
+    <ion-option>Tennis</ion-option>
+  </ion-select>
+  </ion-item>
+  <ion-item>
+  <ion-label>Music</ion-label>
+  <ion-select [(ngModel)]="music" name="music" multiple="true">
+    <ion-option>R&ampB</ion-option>
+    <ion-option>Jazz</ion-option>
+    <ion-option>Trap</ion-option>
+    <ion-option>Hip-Hop</ion-option>
+    <ion-option>Pop</ion-option>
+    <ion-option>Metal</ion-option>
+    <ion-option>EDM</ion-option>
+    <ion-option>Rock</ion-option>
+    <ion-option>Classical</ion-option>
+  </ion-select>
+  </ion-item>
+  <ion-item>
+  <ion-label>Movies</ion-label>
+  <ion-select [(ngModel)]="movies" name="movies" multiple="true">
+    <ion-option>Action</ion-option>
+    <ion-option>Sci-fi</ion-option>
+    <ion-option>Horror</ion-option>
+    <ion-option>Comedy</ion-option>
+    <ion-option>Romance</ion-option>
+    <ion-option>Documentary</ion-option>
+  </ion-select>
+  </ion-item>
   <button color="secondary" [disabled]="!formCtrl.form.valid" ion-button block (click)="save()">Save</button>
+
 </form>
 </ion-content>
+
+
