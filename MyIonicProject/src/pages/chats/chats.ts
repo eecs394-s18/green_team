@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ChatPage } from '../chat/chat';
 import * as firebase from 'Firebase';
@@ -42,7 +42,7 @@ export class ChatsPage {
       this.presentText('You are not signed in. Please sign in and try again.');
     } else {
       const ref = firebase.database().ref('users');
-      const users = ref.on('value', snapshot => {
+      ref.on('value', snapshot => {
         this.allUsers = snapshot.val();
         this.selectUsers();
       });

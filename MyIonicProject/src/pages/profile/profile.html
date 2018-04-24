@@ -22,8 +22,8 @@
   <form #formCtrl="ngForm">
       <div align="center" *ngIf="formCtrl.form.valid">
 
-        <h1>Profile</h1>
-        <img class="profile-image" src="assets/imgs/avatar.png">
+        <h1> Profile</h1>
+        <img class="profile-image" src="{{ pic }}">
           <h4>{{person.username}}, {{person.email}}, {{person.country}}, {{person.languages}}</h4>
       </div>
   <ion-list>
