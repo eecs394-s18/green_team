@@ -60,9 +60,7 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {},
-      "com.synconset.imagepicker": {
-        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "profile picture upload"
-      }
+      "com.synconset.imagepicker": {}
     },
     "platforms": [
       "ios",

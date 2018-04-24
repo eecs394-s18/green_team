@@ -25,7 +25,9 @@ export class ProfilePage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public loadingCtrl: LoadingController,
-              private storageProvider: StorageProvider) {
+              private storageProvider: StorageProvider,
+              private imagePicker: ImagePicker) {
+
     this.person = {
       username: undefined,
       email: undefined,
@@ -52,7 +54,7 @@ export class ProfilePage {
     }
 
     // replace filename with prof pic name from DB
-    this.storageProvider.getPictureURL('Kellogg01.jpg').then(url => this.pic = url);
+    this.storageProvider.getPictureURL('avatar.png').then(url => this.pic = url);
 
     // let options = {
     //     // Android only. Max images to be selected, defaults to 15. If this is set to 1, upon
