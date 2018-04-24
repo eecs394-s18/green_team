@@ -117,7 +117,8 @@ export class MatchPage {
         }
       }
       else {
-        if ((this.allUsers[keys[i]]['country'] == query['country']) && (this.allUsers[keys[i]]['languages'].includes(query['languages'])) &&
+        if ((this.allUsers[keys[i]]['country'].toLowerCase() == query['country'].toLowerCase()) && 
+          ((this.allUsers[keys[i]]['languages']).toLowerCase().includes(query['languages'].toLowerCase())) &&
          this.allUsers[keys[i]]['international'] != this.allUsers[this.currentUser.uid]['international']) {
           this.chosenUsers.push(obj);
         }
