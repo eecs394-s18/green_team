@@ -43,6 +43,7 @@ export class MatchPage {
       return
     }
 
+<<<<<<< HEAD
     const ref = firebase.database().ref('users');
     const users = ref.once('value', snapshot => {
       this.allUsers = snapshot.val();
@@ -55,6 +56,8 @@ export class MatchPage {
         this.loading.dismiss();
       })
     });
+=======
+>>>>>>> 5aa02ad914a19a6c9ea354e73e8b0cfef1dda09d
 
     firebase.database().ref('/users/' + this.currentUser.uid).once('value', snapshot => {
         const userData = snapshot.val();

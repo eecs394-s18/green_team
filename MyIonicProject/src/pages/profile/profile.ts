@@ -63,6 +63,22 @@ export class ProfilePage {
       }
     }, (err) => { });
 
+    // replace filename with prof pic name from DB
+    this.storageProvider.getPictureURL('Kellogg01.jpg').then(url => this.pic = url);
+
+    let options = {
+        // Android only. Max images to be selected, defaults to 15. If this is set to 1, upon
+        // selection of a single image, the plugin will return it.
+        maximumImagesCount: 1
+    };
+
+
+    this.imagePicker.getPictures(options).then((results) => {
+      for (var i = 0; i < results.length; i++) {
+          console.log('Image URI: ' + results[i]);
+      }
+    }, (err) => { });
+
     if (this.user == null) {
       loading.dismiss();
       this.presentText('You are not signed in. Please sign in and try again.');
