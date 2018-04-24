@@ -19,13 +19,15 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HttpModule } from '@angular/http';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 import { FirebaseProvider } from './../providers/firebase/firebase';
 
+import { ImagePicker } from '@ionic-native/image-picker';
 
 import * as firebase from 'firebase';
 
 import { AuthProvider } from '../providers/auth/auth';
+import { StorageProvider } from '../providers/storage/storage';
 import { environment } from '../environments/environment';
 
 firebase.initializeApp(environment.firebase);
@@ -58,6 +60,7 @@ firebase.initializeApp(environment.firebase);
     BrowserModule,
     HttpModule,
     AngularFireDatabaseModule,
+    AngularFireStorageModule,
     //AngularFireModule.initializeApp(config),
     IonicModule.forRoot(MyApp)
   ],
@@ -80,7 +83,9 @@ firebase.initializeApp(environment.firebase);
     SplashScreen,
     FirebaseProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthProvider
+    AuthProvider,
+    StorageProvider,
+    ImagePicker
   ]
 })
 export class AppModule {}
