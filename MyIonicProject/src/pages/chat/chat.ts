@@ -67,7 +67,8 @@ export class ChatPage {
       type:this.data.type,
       user:this.data.nickname,
       message:this.data.message,
-      sendDate:Date()
+      sendDate:Date(),
+      unix_ts: (new Date()).getTime() / 1000
    	 });
     this.data.message = '';
 	}
