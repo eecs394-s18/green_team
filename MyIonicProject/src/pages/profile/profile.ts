@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { StorageProvider } from '../../providers/storage/storage';
-import { ImagePicker } from '@ionic-native/image-picker';
+//import { ImagePicker } from '@ionic-native/image-picker';
 import * as firebase from 'Firebase';
 
 /**
@@ -25,8 +25,9 @@ export class ProfilePage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public loadingCtrl: LoadingController,
-              private storageProvider: StorageProvider,
-              private imagePicker: ImagePicker) {
+              private storageProvider: StorageProvider//,
+              //private imagePicker: ImagePicker
+              ) {
 
     this.person = {
       username: undefined,

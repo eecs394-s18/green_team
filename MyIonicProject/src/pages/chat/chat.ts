@@ -40,7 +40,7 @@ export class ChatPage {
     this.data.nickname = this.nickname;
 
     // Create completely new chat
-    let joinData = firebase.database().ref('chatrooms/'+this.roomkey+'/chats').push();
+    //let joinData = firebase.database().ref('chatrooms/'+this.roomkey+'/chats').push();
     /*
     joinData.set({
       type:'join',
@@ -70,7 +70,7 @@ export class ChatPage {
   }
 
   sendprompt(m) {
-    var button = document.getElementsByClassName("prompt");
+    document.getElementsByClassName("prompt");
     this.sendMessage(m);
   }
 

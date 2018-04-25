@@ -45,7 +45,7 @@ export class MatchPage {
     }
 
     const ref = firebase.database().ref('users');
-    const users = ref.once('value', snapshot => {
+    ref.once('value', snapshot => {
       this.allUsers = snapshot.val();
 
       // Get chatrooms of current user for filtering
