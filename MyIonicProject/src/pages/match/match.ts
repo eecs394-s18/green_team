@@ -152,7 +152,7 @@ export class MatchPage {
         tmp[chatID]['members'] = {}
         tmp[chatID]['members'][this.currentUser.uid] = true;
         tmp[chatID]['members'][user.id] = true;
-
+        
         console.log('outside: ', this);
 
         rooms.update(tmp).then(res => {
