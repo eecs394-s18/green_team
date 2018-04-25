@@ -13,7 +13,9 @@
       {{ otherNickname }}
     </ion-title>
     <ion-buttons end>
-
+      <button ion-button icon-only (click)="pushProfile()">
+        <ion-icon name="information-circle"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -47,6 +49,17 @@
 
 <ion-footer>
   <ion-grid>
+    <ion-row id="prompts">
+      <ion-col>
+        <button (click)="sendprompt('I am interested in learning about your culture!')" class="prompt">I'm interested in learning more about your culture!</button>
+      </ion-col>
+      <ion-col>
+        <button (click)="sendprompt('I would like to practice your language.')" class="prompt">I would like to practice your language</button>
+      </ion-col>
+      <ion-col>
+        <button (click)="sendprompt('Would you like to chat?')" class="prompt">Would you like to chat?</button>
+      </ion-col>
+    </ion-row>
     <ion-row>
       <ion-col col-10>
         <ion-input type="text" placeholder="Type a message" [(ngModel)]="data.message" name="message"></ion-input>

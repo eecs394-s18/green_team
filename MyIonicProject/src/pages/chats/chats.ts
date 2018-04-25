@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ChatPage } from '../chat/chat';
 import * as firebase from 'Firebase';
@@ -42,7 +42,7 @@ export class ChatsPage {
       this.presentText('You are not signed in. Please sign in and try again.');
     } else {
       const ref = firebase.database().ref('users');
-      const users = ref.on('value', snapshot => {
+      ref.on('value', snapshot => {
         this.allUsers = snapshot.val();
         this.selectUsers();
       });
@@ -68,8 +68,8 @@ export class ChatsPage {
     rooms.once('value')
     .then(snap => {
       const chats = snap.val();
-      console.log(snap);
-      console.log(chats);
+      var unix_ts_to_obj = {}; // Map unix timestamp -> obj (target user)
+
       for (var key in chats) {
         if (chats.hasOwnProperty(key)) {
           if (currUser.uid in chats[key]['members']) {
@@ -82,21 +82,30 @@ export class ChatsPage {
                 let sender = chats[key]['chats'][msg_keys[msg_keys.length - 1]]['user'];
 
                 obj['last_msg'] = (sender == currUser.displayName ? 'Me: ' : sender + ': ') + chats[key]['chats'][msg_keys[msg_keys.length - 1]]['message'];
+                unix_ts_to_obj[chats[key]['chats'][msg_keys[msg_keys.length - 1]]['unix_ts']] = obj;
             }
             else {
                 obj['last_msg'] = undefined;
+                unix_ts_to_obj[(new Date()).getTime() / 1000] = obj;
             }
-            this.chosenUsers.push(obj);
+
             this.UUIDToChatID[Object.keys(chats[key]['members'])[0]] = key;
           }
         }
+      }
+
+      // Sort chats by unix timestamp
+      var sortedTS = [];
+      sortedTS = Object.keys(unix_ts_to_obj).sort().reverse();
+      for (var i in sortedTS) {
+        this.chosenUsers.push(unix_ts_to_obj[sortedTS[i]]);
       }
       this.loading.dismiss();
     });
   }
 
   chatUser(user): void {
-    this.navCtrl.setRoot(ChatPage, {
+    this.navCtrl.push(ChatPage, {
       key: this.UUIDToChatID[user.id], // key of the chatroom
       nickname: firebase.auth().currentUser.displayName,
       otherNickname: user.username,

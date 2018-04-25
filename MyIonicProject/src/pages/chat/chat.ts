@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, Content } from 'ionic-angular';
-import { RoomPage } from '../room/room';
 import { MatchPage } from '../match/match'
 import { ChatsPage } from '../chats/chats'
+import { ProfileViewerPage } from '../profile-viewer/profile-viewer';
 import * as firebase from 'Firebase';
 
 /**
@@ -50,7 +50,6 @@ export class ChatPage {
     });
     this.data.message = '';
     */
-
     firebase.database().ref('chatrooms/'+this.roomkey+'/chats').on('value', resp => {
       this.chats = [];
       this.chats = snapshotToArray(resp);
@@ -62,29 +61,70 @@ export class ChatPage {
     });
   }
 
-  sendMessage() {
+  ionViewDidLoad() {
+    //provide chat suggestions if no chats have been sent
+    if (this.chats.length != 0) {
+      let prompts = document.getElementById("prompts");
+      prompts.style.display = "none";
+    }
+  }
+
+  sendprompt(m) {
+    var button = document.getElementsByClassName("prompt");
+    this.sendMessage(m);
+  }
+
+  sendMessage(prompt) {
    	let newData = firebase.database().ref('chatrooms/'+this.roomkey+'/chats').push();
-  	newData.set({
+    if (prompt) {
+      newData.set({
+      type:this.data.type,
+      user:this.data.nickname,
+      message:prompt,
+      sendDate:Date(),
+      unix_ts: (new Date()).getTime() / 1000
+     });
+    } else {
+      newData.set({
       type:this.data.type,
       user:this.data.nickname,
       message:this.data.message,
-      sendDate:Date()
-   	 });
+      sendDate:Date(),
+      unix_ts: (new Date()).getTime() / 1000
+     });
+    }
+  	
     this.data.message = '';
 	}
 
   // This runs before ionViewDidLeave()
 	exitChat() {
-    if (this.matches) {
-      this.navCtrl.setRoot(MatchPage);
-    } else {
-      this.navCtrl.setRoot(ChatsPage);
-    }
+        if (this.matches) {
+          this.navCtrl.setRoot(MatchPage);
+        } else {
+          this.navCtrl.setRoot(ChatsPage);
+        }
 	}
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ChatPage');
-  }
+    pushProfile() {
+        const currentUserId = firebase.auth().currentUser.uid;
+        var otherUserId = undefined;
+        const members = firebase.database().ref('chatrooms/'+this.roomkey+'/members');
+        members.once('value', snapshot => {
+            const mems = snapshot.val();
+            let uids = Object.keys(mems);
+            if (uids[0] === currentUserId){
+                otherUserId = uids[1];
+            }
+            else{
+                otherUserId = uids[0];
+            }
+            this.navCtrl.push(ProfileViewerPage, {uid: otherUserId});
+        });
+    }
+
+
+
 
   ionViewDidLeave() {
       /*

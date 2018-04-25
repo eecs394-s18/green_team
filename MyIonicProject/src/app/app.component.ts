@@ -4,23 +4,18 @@ import { Component, ViewChild } from '@angular/core';
 
 import { Platform, MenuController, Nav, LoadingController } from 'ionic-angular';
 
-import { RoomPage } from '../pages/room/room';
-import { AddRoomPage } from '../pages/add-room/add-room';
-import { ChatPage } from '../pages/chat/chat';
-import { ProfilesPage } from '../pages/profiles/profiles';
+
 import { ProfilePage } from '../pages/profile/profile';
 import { MatchPage } from '../pages/match/match';
 import { AuthPage } from '../pages/auth/auth';
 import { ChatsPage } from '../pages/chats/chats';
-import { NewuserPage } from '../pages/newuser/newuser'
 
-import { AuthProvider } from '../providers/auth/auth';
-
+import { GlobalData } from '../providers/globaldata';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import * as firebase from 'Firebase';
-import { environment } from '../environments/environment';
+//import { environment } from '../environments/environment';
 
 
 //const config = {
@@ -51,7 +46,7 @@ export class MyApp {
     //firebase.initializeApp(config);
 
     this.initializeApp();
-
+    GlobalData.init() // Initialize global data to default on first load up
     // set our app's pages
     this.pages = [
       { title: 'Profile', component: ProfilePage },
