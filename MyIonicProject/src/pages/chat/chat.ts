@@ -84,7 +84,7 @@ export class ChatPage {
       sendDate:Date(),
       unix_ts: (new Date()).getTime() / 1000
      });
-    } else {
+    } else if (this.data.message != ''){
       newData.set({
       type:this.data.type,
       user:this.data.nickname,
