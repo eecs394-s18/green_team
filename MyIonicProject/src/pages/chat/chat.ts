@@ -50,7 +50,6 @@ export class ChatPage {
     });
     this.data.message = '';
     */
-
     firebase.database().ref('chatrooms/'+this.roomkey+'/chats').on('value', resp => {
       this.chats = [];
       this.chats = snapshotToArray(resp);
@@ -62,15 +61,39 @@ export class ChatPage {
     });
   }
 
-  sendMessage() {
+  ionViewDidLoad() {
+    //provide chat suggestions if no chats have been sent
+    if (this.chats.length != 0) {
+      let prompts = document.getElementById("prompts");
+      prompts.style.display = "none";
+    }
+  }
+
+  sendprompt(m) {
+    var button = document.getElementsByClassName("prompt");
+    this.sendMessage(m);
+  }
+
+  sendMessage(prompt) {
    	let newData = firebase.database().ref('chatrooms/'+this.roomkey+'/chats').push();
-  	newData.set({
+    if (prompt) {
+      newData.set({
+      type:this.data.type,
+      user:this.data.nickname,
+      message:prompt,
+      sendDate:Date(),
+      unix_ts: (new Date()).getTime() / 1000
+     });
+    } else {
+      newData.set({
       type:this.data.type,
       user:this.data.nickname,
       message:this.data.message,
       sendDate:Date(),
       unix_ts: (new Date()).getTime() / 1000
-   	 });
+     });
+    }
+  	
     this.data.message = '';
 	}
 
@@ -101,9 +124,7 @@ export class ChatPage {
     }
 
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ChatPage');
-  }
+
 
   ionViewDidLeave() {
       /*
