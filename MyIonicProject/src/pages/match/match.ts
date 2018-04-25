@@ -172,7 +172,7 @@ export class MatchPage {
   }
 
   navigateToChat(chatID, nickname, otherNickname) {
-    this.navCtrl.setRoot(ChatPage, {
+    this.navCtrl.push(ChatPage, {
       key: chatID,
       nickname: nickname,
       otherNickname: otherNickname,

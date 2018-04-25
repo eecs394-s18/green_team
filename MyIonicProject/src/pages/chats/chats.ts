@@ -68,8 +68,6 @@ export class ChatsPage {
     rooms.once('value')
     .then(snap => {
       const chats = snap.val();
-      console.log(snap);
-      console.log(chats);
       for (var key in chats) {
         if (chats.hasOwnProperty(key)) {
           if (currUser.uid in chats[key]['members']) {
@@ -96,7 +94,7 @@ export class ChatsPage {
   }
 
   chatUser(user): void {
-    this.navCtrl.setRoot(ChatPage, {
+    this.navCtrl.push(ChatPage, {
       key: this.UUIDToChatID[user.id], // key of the chatroom
       nickname: firebase.auth().currentUser.displayName,
       otherNickname: user.username,

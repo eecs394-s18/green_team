@@ -1,0 +1,29 @@
+<!--
+  Generated template for the ProfileViewerPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title> {{ person.username }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div align="center">
+      <img class="profile-image" src="{{ prof_pic }}">
+  </div>
+  <ion-list>
+    <ion-item>
+      <ion-icon name="md-globe"></ion-icon> {{ person.country }}
+    </ion-item>
+    <ion-item>
+      <ion-icon name="ios-chatbubbles"></ion-icon> {{ person.languages }}
+    </ion-item>
+</ion-list>
+
+</ion-content>

@@ -6,12 +6,14 @@
 -->
 <ion-header>
   <ion-navbar>
-    <button ion-button icon-only (click)="exitChat()">
-      <ion-icon name="arrow-back"></ion-icon>
-    </button>
     <ion-title>
       {{ otherNickname }}
     </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="pushProfile()">
+        <ion-icon name="information-circle"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 

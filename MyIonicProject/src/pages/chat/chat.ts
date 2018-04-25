@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, Content } from 'ionic-angular';
 import { MatchPage } from '../match/match'
 import { ChatsPage } from '../chats/chats'
+import { ProfileViewerPage } from '../profile-viewer/profile-viewer';
 import * as firebase from 'Firebase';
 
 /**
@@ -74,12 +75,30 @@ export class ChatPage {
 
   // This runs before ionViewDidLeave()
 	exitChat() {
-    if (this.matches) {
-      this.navCtrl.setRoot(MatchPage);
-    } else {
-      this.navCtrl.setRoot(ChatsPage);
-    }
+        if (this.matches) {
+          this.navCtrl.setRoot(MatchPage);
+        } else {
+          this.navCtrl.setRoot(ChatsPage);
+        }
 	}
+
+    pushProfile() {
+        const currentUserId = firebase.auth().currentUser.uid;
+        var otherUserId = undefined;
+        const members = firebase.database().ref('chatrooms/'+this.roomkey+'/members');
+        members.once('value', snapshot => {
+            const mems = snapshot.val();
+            let uids = Object.keys(mems);
+            if (uids[0] === currentUserId){
+                otherUserId = uids[1];
+            }
+            else{
+                otherUserId = uids[0];
+            }
+            this.navCtrl.push(ProfileViewerPage, {uid: otherUserId});
+        });
+    }
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatPage');
