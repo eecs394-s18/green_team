@@ -10,7 +10,7 @@ import { MatchPage } from '../pages/match/match';
 import { AuthPage } from '../pages/auth/auth';
 import { ChatsPage } from '../pages/chats/chats';
 
-
+import { GlobalData } from '../providers/globaldata';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -46,7 +46,7 @@ export class MyApp {
     //firebase.initializeApp(config);
 
     this.initializeApp();
-
+    GlobalData.init() // Initialize global data to default on first load up
     // set our app's pages
     this.pages = [
       { title: 'Profile', component: ProfilePage },
