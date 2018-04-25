@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ChatPage } from '../chat/chat';
+import { GlobalData } from '../../providers/globaldata'
 import * as firebase from 'Firebase';
 import * as objectHash from 'object-hash';
 @IonicPage()
@@ -17,7 +18,7 @@ export class MatchPage {
   private userRooms;
   currentUser: any;
   public person: {username: string, email: string, country: string, languages: string};
-  public filters: {username: string, email: string, country: string, languages: string}
+  public filters: {username: string, email: string, country: string, languages: string};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
     this.allUsers = {};
@@ -51,8 +52,12 @@ export class MatchPage {
       ref.child(this.currentUser.uid+'/rooms/').once('value', snapshot => {
         this.userRooms = snapshot.val();
         if (this.userRooms == null) this.userRooms = {};
-        // this.selectUsers();
-        this.loading.dismiss();
+
+        // If filters have been saved
+        var savedFilters = GlobalData.getFilters();
+        if (savedFilters) {
+          this.selectUsers(Object.keys(savedFilters).length == 0 ? null : savedFilters);
+        } else this.loading.dismiss();
       })
     });
 
@@ -62,8 +67,6 @@ export class MatchPage {
           this.person = userData;
         }
     });
-
-
 
     // test query
     // var query = {
@@ -96,6 +99,8 @@ export class MatchPage {
   }
 
   selectUsers(query) {
+    GlobalData.setFilters(query);
+
     // TODO: Algorithm for matching users goes here.
     this.chosenUsers = []
     let keys:string[] = Object.keys(this.allUsers);
@@ -124,7 +129,6 @@ export class MatchPage {
       }
 
     }
-    this.presentText2("Success!")
     this.loading.dismiss();
   }
 
@@ -172,7 +176,7 @@ export class MatchPage {
   }
 
   navigateToChat(chatID, nickname, otherNickname) {
-    this.navCtrl.setRoot(ChatPage, {
+    this.navCtrl.push(ChatPage, {
       key: chatID,
       nickname: nickname,
       otherNickname: otherNickname,
