@@ -70,6 +70,8 @@ export class ChatsPage {
       const chats = snap.val();
       console.log(snap);
       console.log(chats);
+      var unix_ts_to_obj = {}; // Map unix timestamp -> obj (target user)
+
       for (var key in chats) {
         if (chats.hasOwnProperty(key)) {
           if (currUser.uid in chats[key]['members']) {
@@ -82,14 +84,23 @@ export class ChatsPage {
                 let sender = chats[key]['chats'][msg_keys[msg_keys.length - 1]]['user'];
 
                 obj['last_msg'] = (sender == currUser.displayName ? 'Me: ' : sender + ': ') + chats[key]['chats'][msg_keys[msg_keys.length - 1]]['message'];
+                unix_ts_to_obj[chats[key]['chats'][msg_keys[msg_keys.length - 1]]['unix_ts']] = obj;
             }
             else {
                 obj['last_msg'] = undefined;
+                unix_ts_to_obj[(new Date()).getTime() / 1000] = obj;
             }
-            this.chosenUsers.push(obj);
+
             this.UUIDToChatID[Object.keys(chats[key]['members'])[0]] = key;
           }
         }
+      }
+      
+      // Sort chats by unix timestamp
+      var sortedTS = [];
+      sortedTS = Object.keys(unix_ts_to_obj).sort().reverse();
+      for (var i in sortedTS) {
+        this.chosenUsers.push(unix_ts_to_obj[sortedTS[i]]);
       }
       this.loading.dismiss();
     });
