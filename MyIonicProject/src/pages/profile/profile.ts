@@ -104,6 +104,7 @@ export class ProfilePage {
   // save the user's profile into Firebase so we can list users,
   // use them in Security and Firebase Rules, and show profiles
   save() {
+    console.log('person: ',this.person)
     let loading = this.loadingCtrl.create({
       content: 'Updating profile...'
     });
