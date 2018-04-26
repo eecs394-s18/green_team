@@ -24,13 +24,13 @@
     <ion-item>
       <ion-icon name="ios-chatbubbles"></ion-icon> {{ person.languages }}
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="person.movies">
       <ion-icon name="ios-videocam"></ion-icon> {{ person.movies }}
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="person.sports">
       <ion-icon name="ios-american-football"></ion-icon> {{ person.sports}}
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="person.music">
       <ion-icon name="ios-musical-notes"></ion-icon> {{ person.music}}
     </ion-item>
 
