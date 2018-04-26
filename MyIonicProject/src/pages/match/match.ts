@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ChatPage } from '../chat/chat';
-import { GlobalData } from '../../providers/globaldata'
+import { GlobalData } from '../../providers/globaldata';
+import { ProfileViewerPage } from '../profile-viewer/profile-viewer';
 import * as firebase from 'Firebase';
 import * as objectHash from 'object-hash';
 @IonicPage()
@@ -122,7 +123,7 @@ export class MatchPage {
         }
       }
       else {
-        if ((this.allUsers[keys[i]]['country'].toLowerCase() == query['country'].toLowerCase()) && 
+        if ((this.allUsers[keys[i]]['country'].toLowerCase() == query['country'].toLowerCase()) &&
           ((this.allUsers[keys[i]]['languages']).toLowerCase().includes(query['languages'].toLowerCase())) &&
           this.allUsers[keys[i]]['international'] != this.allUsers[this.currentUser.uid]['international']) {
           this.chosenUsers.push(obj);
@@ -183,6 +184,11 @@ export class MatchPage {
       otherNickname: otherNickname,
       matches: true
     });
+  }
+
+  showProfile(user) {
+      console.log(user);
+      this.navCtrl.push(ProfileViewerPage, {uid: user.id});
   }
 
   searchMatches() {
