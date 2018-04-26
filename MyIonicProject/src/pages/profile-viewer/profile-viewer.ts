@@ -43,6 +43,7 @@ export class ProfileViewerPage {
     console.log('ionViewDidLoad ProfileViewerPage');
     this.user.once('value', snapshot => {
         this.person = snapshot.val();
+        console.log(this.person)
         //replace avatar.png with the appropriate filename once picture uploads are complete
         this.storageProvider.getPictureURL(this.prof_pic).then(url => this.prof_pic = url);
     });
