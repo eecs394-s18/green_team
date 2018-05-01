@@ -18,10 +18,10 @@
       <img class="profile-image" src="{{ prof_pic }}">
   </div>
   <ion-list>
-    <ion-item>
+    <ion-item *ngIf="person.country">
       <ion-icon name="md-globe"></ion-icon> {{ person.country }}
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="person.languages">
       <ion-icon name="ios-chatbubbles"></ion-icon> {{ person.languages }}
     </ion-item>
     <ion-item *ngIf="person.movies">
