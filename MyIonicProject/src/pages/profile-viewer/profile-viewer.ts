@@ -38,36 +38,66 @@ export class ProfileViewerPage {
     this.user.once('value', snapshot => {
         this.person = snapshot.val();
         console.log(this.person);
-        let movies = "";
-        const num_movies = Object.keys(this.person.movies).length;
-        for (let i:number = 0; i < num_movies; i++){
-            movies += this.person.movies[i]
-            if (i < num_movies - 1){
-                movies += ', ';
+        if(this.person.movies){
+            let movies = "";
+            const num_movies = Object.keys(this.person.movies).length;
+            for (let i:number = 0; i < num_movies; i++){
+                movies += this.person.movies[i]
+                if (i < num_movies - 1){
+                    movies += ', ';
+                }
             }
+            this.person.movies = movies;
         }
-        this.person.movies = movies;
-
-        let music = "";
-        const num_music = Object.keys(this.person.music).length;
-        for (let i:number = 0; i < num_music; i++){
-            music += this.person.music[i]
-            if (i < num_music - 1){
-                music += ', ';
+        else{
+            this.person.movies = "";
+        }
+        if(this.person.music){
+            let music = "";
+            const num_music = Object.keys(this.person.music).length;
+            for (let i:number = 0; i < num_music; i++){
+                music += this.person.music[i]
+                if (i < num_music - 1){
+                    music += ', ';
+                }
             }
+            this.person.music = music;
         }
-        this.person.music = music;
+        else{
+            this.person.music = "";
+        }
 
-        let sports = "";
-        const num_sports = Object.keys(this.person.sports).length;
-        for (let i:number = 0; i < num_sports; i++){
-            sports += this.person.sports[i]
-            if (i < num_sports - 1){
-                sports += ', ';
+        if(this.person.sports){
+            let sports = "";
+            const num_sports = Object.keys(this.person.sports).length;
+            for (let i:number = 0; i < num_sports; i++){
+                sports += this.person.sports[i]
+                if (i < num_sports - 1){
+                    sports += ', ';
+                }
             }
+            this.person.sports = sports;
         }
-        this.person.sports = sports;
+        else{
+            this.person.sports = "";
+        }
 
+        if(this.person.languages){
+            let languages = "";
+            const num_languages = Object.keys(this.person.languages).length;
+            for (let i:number = 0; i < num_languages; i++){
+                languages += this.person.languages[i]
+                if (i < num_languages - 1){
+                    languages += ', ';
+                }
+            }
+            this.person.languages = languages;
+        }
+        else{
+            this.person.languages = "";
+        }
+
+        
         //replace avatar.png with the appropriate filename once picture uploads are complete
         this.storageProvider.getPictureURL(this.prof_pic).then(url => this.prof_pic = url);
     });

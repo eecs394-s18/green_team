@@ -54,6 +54,22 @@ export class MyApp {
       { title: 'Find a New Match', component: MatchPage },
       { title: 'Chats', component: ChatsPage},
     ];
+    /*var rp:any;
+    firebase.auth().onAuthStateChanged((user) =>
+    {
+      if (user)
+      {
+        // User is signed in.
+        rp = ChatsPage;
+      }
+      else
+      {
+        // No user is signed in.
+        rp = AuthPage;
+      }
+  });
+  this.rootPage = rp;
+  */
   }
 
   initializeApp() {
