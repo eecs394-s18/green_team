@@ -19,14 +19,14 @@ export class MatchPage {
   private userRooms;
   currentUser: any;
   public person: {username: string, email: string, country: string, languages: string};
-  public filters: {username: string, email: string, country: string, languages: string};
+  public filters: {country: string, languages: string, sports: string, music: string, movies: string};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
     this.allUsers = {};
     this.chosenUsers = [];
     this.currentUser = firebase.auth().currentUser;
     this.userRooms = {};
-    this.filters = {username: undefined, email: undefined, country: undefined, languages: undefined};
+    this.filters = {country: undefined, languages: undefined, sports: undefined, music: undefined, movies: undefined};
 
     //this.currentUser = firebase.database().ref('users/' + firebase.auth().currentUser.uid);
     //console.log(this.currentUser)
@@ -99,6 +99,13 @@ export class MatchPage {
     }, 1500);
   }
 
+  //see if two arrays contain any of the same elements
+  findOne(haystack, arr) {
+    return arr.some(function (v) {
+        return haystack.indexOf(v) >= 0;
+    });
+  }
+
   selectUsers(query) {
     GlobalData.setFilters(query);
 
@@ -123,9 +130,34 @@ export class MatchPage {
         }
       }
       else {
-        if ((this.allUsers[keys[i]]['country'].toLowerCase() == query['country'].toLowerCase()) &&
-          ((this.allUsers[keys[i]]['languages']).toLowerCase().includes(query['languages'].toLowerCase())) &&
-          this.allUsers[keys[i]]['international'] != this.allUsers[this.currentUser.uid]['international']) {
+        var match = false;
+        if (this.allUsers[keys[i]]['sports']) {
+          if (this.findOne(this.allUsers[keys[i]]['sports'],query['sports'])) {
+            match = true;
+          }
+        }
+        if (this.allUsers[keys[i]]['music']) {
+          if (this.findOne(this.allUsers[keys[i]]['music'],query['music'])) {
+            match = true;
+          }
+        }
+        if (this.allUsers[keys[i]]['movies']) {
+          if (this.findOne(this.allUsers[keys[i]]['movies'],query['movies'])) {
+            match = true;
+          }
+        }
+        if (this.allUsers[keys[i]]['languages']) {
+          if (this.findOne(this.allUsers[keys[i]]['languages'],query['languages'])) {
+            match = true;
+          }
+        }
+        if ((this.allUsers[keys[i]]['country'].toLowerCase() == query['country'].toLowerCase())) {
+          match = true;
+        }
+        if (this.allUsers[keys[i]]['international'] == this.allUsers[this.currentUser.uid]['international']) {
+          match = false;
+        }
+        if (match == true) {
           this.chosenUsers.push(obj);
         }
       }
@@ -193,7 +225,8 @@ export class MatchPage {
 
   searchMatches() {
     // get the information of how user wants to filter
-    this.filters = {username: this.filters.username, email: this.filters.email, country: this.filters.country, languages: this.filters.languages}
+    this.filters = {country: this.filters.country, languages: this.filters.languages, sports: this.filters.sports, music: this.filters.music, movies: this.filters.movies}
+    console.log(this.filters)
     this.selectUsers(this.filters)
   }
 
