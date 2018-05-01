@@ -12,13 +12,91 @@
   <form #formCtrl="ngForm">
     <h5>Who do you want to talk to?</h5>
     <ion-list>
-      <ion-item>
+<ion-item>
         <ion-label floating>Country</ion-label>
-        <ion-input type="text" [(ngModel)]="filters.country" name="country" required></ion-input>
+        <ion-select [(ngModel)]="filters.country" name="country" required>
+          <ion-option>China</ion-option>
+          <ion-option>India</ion-option>
+          <ion-option>United States</ion-option>
+          <ion-option>Brazil</ion-option>
+          <ion-option>Pakistan</ion-option>
+          <ion-option>Russia</ion-option>
+          <ion-option>Mexico</ion-option>
+          <ion-option>Japan</ion-option>
+          <ion-option>Phillipines</ion-option>
+          <ion-option>Germany</ion-option>
+          <ion-option>Turkey</ion-option>
+          <ion-option>United Kingdom</ion-option>
+          <ion-option>Thailand</ion-option>
+          <ion-option>France</ion-option>
+          <ion-option>Italy</ion-option>
+          <ion-option>Korea</ion-option>
+          <ion-option>Argentina</ion-option>
+          <ion-option>Spain</ion-option>
+          <ion-option>Ukraine</ion-option>
+          <ion-option>Taiwan</ion-option>
+        </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label floating>Language</ion-label>
-        <ion-input type="text" [(ngModel)]="filters.languages" name="languages" required></ion-input>
+        <ion-label floating>Languages</ion-label>
+        <ion-select [(ngModel)]="filters.languages" name="languages" required multiple='true'>
+          <ion-option>Chinese (Mandarin)</ion-option>
+          <ion-option>English</ion-option>
+          <ion-option>Spanish</ion-option>
+          <ion-option>Hindi</ion-option>
+          <ion-option>Arabic</ion-option>
+          <ion-option>Portuguese</ion-option>
+          <ion-option>Russian</ion-option>
+          <ion-option>Japanese</ion-option>
+          <ion-option>Korean</ion-option>
+          <ion-option>German</ion-option>
+          <ion-option>French</ion-option>
+          <ion-option>Turkish</ion-option>
+          <ion-option>Tamil</ion-option>
+          <ion-option>Persian</ion-option>
+          <ion-option>Tagalog</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Sports</ion-label>
+        <ion-select [(ngModel)]="filters.sports" name="sports" multiple="true">
+          <ion-option>Basketball</ion-option>
+          <ion-option>Football</ion-option>
+          <ion-option>Soccer</ion-option>
+          <ion-option>Baseball</ion-option>
+          <ion-option>Badminton</ion-option>
+          <ion-option>Body Building</ion-option>
+          <ion-option>Golf</ion-option>
+          <ion-option>Lacrosse</ion-option>
+          <ion-option>Mountain Biking</ion-option>
+          <ion-option>Swimming</ion-option>
+          <ion-option>Tennis</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Music</ion-label>
+        <ion-select [(ngModel)]="filters.music" name="music" multiple="true">
+          <ion-option>R&amp;B</ion-option>
+          <ion-option>Jazz</ion-option>
+          <ion-option>Trap</ion-option>
+          <ion-option>Hip-Hop</ion-option>
+          <ion-option>Pop</ion-option>
+          <ion-option>Metal</ion-option>
+          <ion-option>EDM</ion-option>
+          <ion-option>Rock</ion-option>
+          <ion-option>Classical</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Movies</ion-label>
+        <ion-select [(ngModel)]="filters.movies" name="movies" multiple="true">
+          <ion-option>Action</ion-option>
+          <ion-option>Sci-fi</ion-option>
+          <ion-option>Horror</ion-option>
+          <ion-option>Comedy</ion-option>
+          <ion-option>Romance</ion-option>
+          <ion-option>Documentary</ion-option>
+        </ion-select>
       </ion-item>
     </ion-list>
     <button color="secondary" [disabled]="!formCtrl.form.valid" ion-button block (click)="searchMatches()">Search</button>
