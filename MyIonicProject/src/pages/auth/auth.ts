@@ -8,6 +8,7 @@ import {
 import { AuthProvider } from '../../providers/auth/auth';
 import { ChatsPage } from '../chats/chats';
 import { NewuserPage } from '../newuser/newuser';
+import { StorageProvider } from '../../providers/storage/storage';
 
 @IonicPage()
 @Component({
@@ -21,12 +22,14 @@ export class AuthPage {
     */
    public form: FormGroup;
    public data = { email: "", password: "" }
+   public logosource: String;
 
 
    constructor(public navCtrl: NavController,
                private _FB: FormBuilder,
                private _AUTH: AuthProvider,
-               public loadingCtrl: LoadingController)
+               public loadingCtrl: LoadingController,
+               private storageProvider: StorageProvider)
    {
       // Define FormGroup object using Angular's FormBuilder
       this.form = this._FB.group({
@@ -34,6 +37,10 @@ export class AuthPage {
          'password': ['', Validators.required]
       });
    }
+
+  ionViewDidLoad() {
+    this.storageProvider.getPictureURL('culturalogo.png').then(url => this.logosource = url);
+  }
 
    validateEmail(email): boolean {
      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
