@@ -14,6 +14,7 @@ import { MatchPage } from '../pages/match/match';
 import { ChatsPage } from '../pages/chats/chats';
 import { NewuserPage } from '../pages/newuser/newuser';
 import { ProfileViewerPage } from '../pages/profile-viewer/profile-viewer';
+import { RedirectPage } from '../pages/redirect/redirect';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -57,6 +58,7 @@ firebase.initializeApp(environment.firebase);
     ChatsPage,
     NewuserPage,
     ProfileViewerPage,
+    RedirectPage,
   ],
   imports: [
     BrowserModule,
@@ -80,6 +82,7 @@ firebase.initializeApp(environment.firebase);
     ChatsPage,
     NewuserPage,
     ProfileViewerPage,
+    RedirectPage,
   ],
   providers: [
     StatusBar,

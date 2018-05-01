@@ -9,6 +9,7 @@ import { ProfilePage } from '../pages/profile/profile';
 import { MatchPage } from '../pages/match/match';
 import { AuthPage } from '../pages/auth/auth';
 import { ChatsPage } from '../pages/chats/chats';
+import { RedirectPage } from '../pages/redirect/redirect';
 
 import { GlobalData } from '../providers/globaldata';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -33,7 +34,7 @@ import * as firebase from 'Firebase';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage = AuthPage;
+  rootPage = RedirectPage;
   pages: Array<{title: string, component: any}>;
 
   constructor(
