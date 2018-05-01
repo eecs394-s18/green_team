@@ -66,8 +66,23 @@
       </ion-item>
       <ion-item>
         <ion-label floating>Languages</ion-label>
-        <ion-input [(ngModel)]="person.languages" name="languages" required>
-        </ion-input>
+        <ion-select [(ngModel)]="person.languages" name="languages" required multiple='true'>
+          <ion-option>Chinese (Mandarin)</ion-option>
+          <ion-option>English</ion-option>
+          <ion-option>Spanish</ion-option>
+          <ion-option>Hindi</ion-option>
+          <ion-option>Arabic</ion-option>
+          <ion-option>Portuguese</ion-option>
+          <ion-option>Russian</ion-option>
+          <ion-option>Japanese</ion-option>
+          <ion-option>Korean</ion-option>
+          <ion-option>German</ion-option>
+          <ion-option>French</ion-option>
+          <ion-option>Turkish</ion-option>
+          <ion-option>Tamil</ion-option>
+          <ion-option>Persian</ion-option>
+          <ion-option>Tagalog</ion-option>
+        </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>International?</ion-label>
