@@ -16,7 +16,7 @@ import * as firebase from 'Firebase';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-  public person: {username: string, email: string, country: string, languages: string, international: boolean};
+  public person: {username: string, email: string, grade: string, gender: string, country: string, cultures: string, languages: string, international: boolean};
   user: any;
   new: boolean;
   pic: string;
@@ -29,6 +29,7 @@ export class ProfilePage {
     this.person = {
       username: undefined,
       email: undefined,
+      grade: undefined,
       country: undefined,
       languages: undefined,
       international: false
@@ -69,6 +70,7 @@ export class ProfilePage {
       });
     }
 
+    // BUG: Flag only shows when all required inputs are filled out?
     let rel = (this.person.country === undefined) ? 'avatar' : this.person.country;
     this.storageProvider.getPictureURL(rel + '.png').then(url => this.pic = url);
   }

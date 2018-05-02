@@ -19,15 +19,15 @@ export class MatchPage {
   private loading;
   private userRooms;
   currentUser: any;
-  public person: {username: string, email: string, country: string, languages: string};
-  public filters: {country: string, languages: string, sports: string, music: string, movies: string};
+  public person: {username: string, email: string, grade: string, country: string, languages: string};
+  public filters: {grade: string, country: string, languages: string, sports: string, music: string, movies: string};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, private storageProvider: StorageProvider) {
     this.allUsers = {};
     this.chosenUsers = [];
     this.currentUser = firebase.auth().currentUser;
     this.userRooms = {};
-    this.filters = {country: undefined, languages: undefined, sports: undefined, music: undefined, movies: undefined};
+    this.filters = {grade: undefined, country: undefined, languages: undefined, sports: undefined, music: undefined, movies: undefined};
 
     //this.currentUser = firebase.database().ref('users/' + firebase.auth().currentUser.uid);
     //console.log(this.currentUser)
@@ -134,7 +134,12 @@ export class MatchPage {
       }
       else {
         var match = false;
-        console.log(this.allUsers[keys[i]]['country'])
+
+        if (this.allUsers[keys[i]]['grade'] && query['grade']) {
+          if (this.findOne(this.allUsers[keys[i]]['grade'],query['grade'])) {
+            match = true;
+          }
+        }
         if (this.allUsers[keys[i]]['sports'] && query['sports']) {
           if (this.findOne(this.allUsers[keys[i]]['sports'],query['sports'])) {
             match = true;
@@ -175,7 +180,7 @@ export class MatchPage {
     if (this.chosenUsers.length < 1) {
       this.presentText("No people match your criteria");
     }
-    
+
     this.loading.dismiss();
   }
 

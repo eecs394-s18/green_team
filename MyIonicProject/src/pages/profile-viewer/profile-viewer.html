@@ -18,6 +18,12 @@
       <img class="profile-image" src="{{ prof_pic }}">
   </div>
   <ion-list>
+    <ion-item *ngIf="person.grade">
+      <ion-icon name="school"></ion-icon> {{ person.grade }}
+    </ion-item>
+    <ion-item *ngIf="person.gender">
+      <ion-icon name="transgender"></ion-icon> {{ person.gender }}
+    </ion-item>
     <ion-item *ngIf="person.country">
       <ion-icon name="md-globe"></ion-icon> {{ person.country }}
     </ion-item>
