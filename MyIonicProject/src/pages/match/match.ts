@@ -163,6 +163,10 @@ export class MatchPage {
       }
 
     }
+    console.log(this.chosenUsers.length)
+    if (this.chosenUsers.length < 1) {
+      this.presentText("No people match your criteria");
+    }
     this.loading.dismiss();
   }
 
