@@ -13,6 +13,17 @@
     <h5>Who do you want to talk to?</h5>
     <ion-list>
     <ion-item>
+      <ion-label floating>Grade</ion-label>
+      <ion-select [(ngModel)]="filters.grade" name="grade" multiple='true'>
+        <ion-option>Freshman</ion-option>
+        <ion-option>Sophomore</ion-option>
+        <ion-option>Junior</ion-option>
+        <ion-option>Senior</ion-option>
+        <ion-option>Graduate</ion-option>
+        <ion-option>PHD</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
         <ion-label floating>Country</ion-label>
         <ion-select [(ngModel)]="filters.country" name="country">
           <ion-option>China</ion-option>
@@ -58,7 +69,7 @@
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label>Sports</ion-label>
+        <ion-label floating>Sports</ion-label>
         <ion-select [(ngModel)]="filters.sports" name="sports" multiple="true">
           <ion-option>Basketball</ion-option>
           <ion-option>Football</ion-option>
@@ -74,7 +85,7 @@
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label>Music</ion-label>
+        <ion-label floating>Music</ion-label>
         <ion-select [(ngModel)]="filters.music" name="music" multiple="true">
           <ion-option>R&amp;B</ion-option>
           <ion-option>Jazz</ion-option>
@@ -88,7 +99,7 @@
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label>Movies</ion-label>
+        <ion-label floating>Movies</ion-label>
         <ion-select [(ngModel)]="filters.movies" name="movies" multiple="true">
           <ion-option>Action</ion-option>
           <ion-option>Sci-fi</ion-option>
@@ -110,6 +121,10 @@
       <ion-card-title>{{ user.username }}</ion-card-title>
       <p>
         <ion-list>
+          <ion-item>
+            <ion-icon name="school" item-start></ion-icon>
+            Grade: {{ user.grade }}
+          </ion-item>
           <ion-item>
             <ion-icon name="people" item-start></ion-icon>
             Languages: {{ user.languages }}
