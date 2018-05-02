@@ -105,7 +105,7 @@
   <button color="secondary" ion-button block (click)="showAll()">Show All</button>
 
   <ion-card *ngFor="let user of chosenUsers">
-    <img src="assets/imgs/avatar.png" />
+    <img src="{{ user.pic }}" />
     <ion-card-content>
       <ion-card-title>{{ user.username }}</ion-card-title>
       <p>
@@ -129,7 +129,7 @@
         <ion-icon name="information-circle"></ion-icon>
          View Profile
       </button>
-      
+
       <button (click)="chatUser(user)" ion-button icon-left text-center block>
         <ion-icon name="chatboxes"></ion-icon>
         Chat
@@ -138,4 +138,3 @@
     </ion-card-content>
   </ion-card>
 </ion-content>
-  

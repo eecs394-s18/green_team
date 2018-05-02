@@ -97,9 +97,9 @@ export class ProfileViewerPage {
             this.person.languages = "";
         }
 
-        
-        //replace avatar.png with the appropriate filename once picture uploads are complete
-        this.storageProvider.getPictureURL(this.prof_pic).then(url => this.prof_pic = url);
+
+        let rel = (this.person.country === undefined) ? 'avatar' : this.person.country;
+        this.storageProvider.getPictureURL(rel + '.png').then(url => this.prof_pic = url);
     });
     console.log(this.person);
   }

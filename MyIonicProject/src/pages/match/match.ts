@@ -3,6 +3,7 @@ import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ChatPage } from '../chat/chat';
 import { GlobalData } from '../../providers/globaldata';
 import { ProfileViewerPage } from '../profile-viewer/profile-viewer';
+import { StorageProvider } from '../../providers/storage/storage';
 import * as firebase from 'Firebase';
 import * as objectHash from 'object-hash';
 @IonicPage()
@@ -21,7 +22,7 @@ export class MatchPage {
   public person: {username: string, email: string, country: string, languages: string};
   public filters: {country: string, languages: string, sports: string, music: string, movies: string};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, private storageProvider: StorageProvider) {
     this.allUsers = {};
     this.chosenUsers = [];
     this.currentUser = firebase.auth().currentUser;
@@ -126,6 +127,8 @@ export class MatchPage {
       // filter options shown
       if (query == null) {
         if (this.allUsers[keys[i]]['international'] != this.allUsers[this.currentUser.uid]['international']) {
+          let rel = (obj.country === undefined) ? 'avatar' : obj.country;
+          this.storageProvider.getPictureURL(rel + '.png').then(url => obj.pic = url);
           this.chosenUsers.push(obj);
         }
       }
@@ -161,6 +164,8 @@ export class MatchPage {
           match = false;
         }
         if (match == true) {
+          let rel = (obj.country === undefined) ? 'avatar' : obj.country;
+          this.storageProvider.getPictureURL(rel + '.png').then(url => obj.pic = url);
           this.chosenUsers.push(obj);
         }
       }
@@ -170,6 +175,7 @@ export class MatchPage {
     if (this.chosenUsers.length < 1) {
       this.presentText("No people match your criteria");
     }
+    
     this.loading.dismiss();
   }
 
