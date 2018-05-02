@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { StorageProvider } from '../../providers/storage/storage';
-//import { ImagePicker } from '@ionic-native/image-picker';
 import * as firebase from 'Firebase';
 
 /**
@@ -25,9 +24,7 @@ export class ProfilePage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public loadingCtrl: LoadingController,
-              private storageProvider: StorageProvider//,
-              //private imagePicker: ImagePicker
-              ) {
+              private storageProvider: StorageProvider) {
 
     this.person = {
       username: undefined,
@@ -39,7 +36,6 @@ export class ProfilePage {
     this.new = this.navParams.get("new") as boolean;
 
     let email = this.navParams.get("email") as string;
-    console.log(email);
     if (email) {
       this.person.email = email
     }
@@ -47,28 +43,13 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {
+
     let loading = this.loadingCtrl.create({
       content: 'Getting profile...'
     });
     if (!this.new) {
       loading.present();
     }
-
-    // replace filename with prof pic name from DB
-    this.storageProvider.getPictureURL('avatar.png').then(url => this.pic = url);
-
-    // let options = {
-    //     // Android only. Max images to be selected, defaults to 15. If this is set to 1, upon
-    //     // selection of a single image, the plugin will return it.
-    //     maximumImagesCount: 1
-    // };
-    //
-    //
-    // this.imagePicker.getPictures(options).then((results) => {
-    //   for (var i = 0; i < results.length; i++) {
-    //       console.log('Image URI: ' + results[i]);
-    //   }
-    // }, (err) => { });
 
     if (this.user == null) {
       loading.dismiss();
@@ -87,6 +68,9 @@ export class ProfilePage {
           }
       });
     }
+
+    let rel = (this.person.country === undefined) ? 'avatar' : this.person.country;
+    this.storageProvider.getPictureURL(rel + '.png').then(url => this.pic = url);
   }
 
   presentText(text) {
@@ -98,6 +82,11 @@ export class ProfilePage {
     setTimeout(() => {
       loading.dismiss();
     }, 1500);
+  }
+
+  // Capture change event when user selects a new country to update picture.
+  onCountryChange(selected) {
+    this.storageProvider.getPictureURL(selected + '.png').then(url => this.pic = url);
   }
 
   // Get a reference to the database service
@@ -114,8 +103,7 @@ export class ProfilePage {
       .set(this.person)
       .then(ref => {
         this.user.updateProfile({
-          displayName: this.person.username,
-          photoURL: ""
+          displayName: this.person.username
         }).then(() => {
           this.user.updateEmail(this.person.email).then(() => {
             loading.dismiss();

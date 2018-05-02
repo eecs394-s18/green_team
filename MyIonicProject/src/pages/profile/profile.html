@@ -23,7 +23,7 @@
       <div align="center" *ngIf="formCtrl.form.valid">
 
         <h1> Profile</h1>
-        <img class="profile-image" src="{{ pic }}">
+        <img class="profile-image" [src]="pic">
           <h4>{{person.username}}</h4>
           <h6>{{person.email}}</h6>
           <h6>{{person.country}}</h6>
@@ -41,7 +41,7 @@
       </ion-item>
       <ion-item>
         <ion-label floating>Country</ion-label>
-        <ion-select [(ngModel)]="person.country" name="country" required>
+        <ion-select [(ngModel)]="person.country" name="country" (ionChange)="onCountryChange($event)" required>
           <ion-option>China</ion-option>
           <ion-option>India</ion-option>
           <ion-option>United States</ion-option>
@@ -50,14 +50,14 @@
           <ion-option>Russia</ion-option>
           <ion-option>Mexico</ion-option>
           <ion-option>Japan</ion-option>
-          <ion-option>Phillipines</ion-option>
+          <ion-option>Philippines</ion-option>
           <ion-option>Germany</ion-option>
           <ion-option>Turkey</ion-option>
           <ion-option>United Kingdom</ion-option>
           <ion-option>Thailand</ion-option>
           <ion-option>France</ion-option>
           <ion-option>Italy</ion-option>
-          <ion-option>Korea</ion-option>
+          <ion-option>South Korea</ion-option>
           <ion-option>Argentina</ion-option>
           <ion-option>Spain</ion-option>
           <ion-option>Ukraine</ion-option>
