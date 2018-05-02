@@ -12,9 +12,9 @@
   <form #formCtrl="ngForm">
     <h5>Who do you want to talk to?</h5>
     <ion-list>
-<ion-item>
+    <ion-item>
         <ion-label floating>Country</ion-label>
-        <ion-select [(ngModel)]="filters.country" name="country" required>
+        <ion-select [(ngModel)]="filters.country" name="country">
           <ion-option>China</ion-option>
           <ion-option>India</ion-option>
           <ion-option>United States</ion-option>
@@ -39,7 +39,7 @@
       </ion-item>
       <ion-item>
         <ion-label floating>Languages</ion-label>
-        <ion-select [(ngModel)]="filters.languages" name="languages" required multiple='true'>
+        <ion-select [(ngModel)]="filters.languages" name="languages" multiple='true'>
           <ion-option>Chinese (Mandarin)</ion-option>
           <ion-option>English</ion-option>
           <ion-option>Spanish</ion-option>
@@ -138,3 +138,4 @@
     </ion-card-content>
   </ion-card>
 </ion-content>
+  

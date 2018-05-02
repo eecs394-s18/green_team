@@ -131,28 +131,31 @@ export class MatchPage {
       }
       else {
         var match = false;
-        if (this.allUsers[keys[i]]['sports']) {
+        console.log(this.allUsers[keys[i]]['country'])
+        if (this.allUsers[keys[i]]['sports'] && query['sports']) {
           if (this.findOne(this.allUsers[keys[i]]['sports'],query['sports'])) {
             match = true;
           }
         }
-        if (this.allUsers[keys[i]]['music']) {
+        if (this.allUsers[keys[i]]['music'] && query['music']) {
           if (this.findOne(this.allUsers[keys[i]]['music'],query['music'])) {
             match = true;
           }
         }
-        if (this.allUsers[keys[i]]['movies']) {
+        if (this.allUsers[keys[i]]['movies'] && query['movies']) {
           if (this.findOne(this.allUsers[keys[i]]['movies'],query['movies'])) {
             match = true;
           }
         }
-        if (this.allUsers[keys[i]]['languages']) {
+        if (this.allUsers[keys[i]]['languages'] && query['languages']) {
           if (this.findOne(this.allUsers[keys[i]]['languages'],query['languages'])) {
             match = true;
           }
         }
-        if ((this.allUsers[keys[i]]['country'].toLowerCase() == query['country'].toLowerCase())) {
+        if (this.allUsers[keys[i]]['country'] && query['country']) {
+          if ((this.allUsers[keys[i]]['country'].toLowerCase() == query['country'].toLowerCase())) {
           match = true;
+          }
         }
         if (this.allUsers[keys[i]]['international'] == this.allUsers[this.currentUser.uid]['international']) {
           match = false;
