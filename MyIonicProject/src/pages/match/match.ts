@@ -243,7 +243,7 @@ export class MatchPage {
 
   searchMatches() {
     // get the information of how user wants to filter
-    this.filters = {country: this.filters.country, languages: this.filters.languages, sports: this.filters.sports, music: this.filters.music, movies: this.filters.movies}
+    this.filters = {grade: this.filters.grade, country: this.filters.country, languages: this.filters.languages, sports: this.filters.sports, music: this.filters.music, movies: this.filters.movies}
     console.log(this.filters)
     this.selectUsers(this.filters)
   }

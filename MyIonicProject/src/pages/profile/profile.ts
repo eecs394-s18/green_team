@@ -32,7 +32,9 @@ export class ProfilePage {
       grade: undefined,
       country: undefined,
       languages: undefined,
-      international: false
+      international: false,
+      gender: undefined,
+      cultures: undefined
     };
     this.new = this.navParams.get("new") as boolean;
 
