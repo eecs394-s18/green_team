@@ -31,7 +31,13 @@ export class ChatsPage {
     this.currentUser = firebase.auth().currentUser;
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
+    this.allUsers = {};
+    this.chosenUsers = [];
+    this.existingChats = {};
+    this.UUIDToChatID = {}; // Map target uuid to chat ID to allow for easy joining
+    this.currentUser = firebase.auth().currentUser;
+    
     this.loading = this.loadingCtrl.create({
       content: 'Getting chats...'
     });
