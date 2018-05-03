@@ -27,14 +27,14 @@ export class ProfilePage {
               private storageProvider: StorageProvider) {
 
     this.person = {
-      username: undefined,
-      email: undefined,
-      grade: undefined,
-      country: undefined,
-      languages: undefined,
-      international: false,
-      gender: undefined,
-      cultures: undefined
+      username: "",
+      email: "",
+      grade: "",
+      country: "",
+      languages: [],
+      international: "",
+      gender: "",
+      cultures: []
     };
     this.new = this.navParams.get("new") as boolean;
 
@@ -73,7 +73,7 @@ export class ProfilePage {
     }
 
     // BUG: Flag only shows when all required inputs are filled out?
-    let rel = (this.person.country === undefined) ? 'avatar' : this.person.country;
+    let rel = (this.person.country === "") ? 'avatar' : this.person.country;
     this.storageProvider.getPictureURL(rel + '.png').then(url => this.pic = url);
   }
 
