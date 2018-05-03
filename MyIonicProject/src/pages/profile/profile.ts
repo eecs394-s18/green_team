@@ -16,7 +16,7 @@ import * as firebase from 'Firebase';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-  public person: {username: string, email: string, grade: string, gender: string, country: string, cultures: string, languages: string, international: boolean};
+  public person: {username: string, email: string, grade: string, gender: string, country: string, cultures: string[], languages: string[], international: boolean};
   user: any;
   new: boolean;
   pic: string;
@@ -32,7 +32,7 @@ export class ProfilePage {
       grade: "",
       country: "",
       languages: [],
-      international: "",
+      international: false,
       gender: "",
       cultures: []
     };
